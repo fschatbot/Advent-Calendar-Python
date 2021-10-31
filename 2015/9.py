@@ -31,7 +31,7 @@ def part1(data):
 		des = find_distance(*route)
 		if des < shortest:
 			shortest = des
-	print("The Answer to the First part is:",shortest)
+	return shortest
 
 
 def part2(data):
@@ -41,7 +41,7 @@ def part2(data):
 		des = find_distance(*route)
 		if des > longest:
 			longest = des
-	print("The Answer to the First part is:", longest)
+	return longest
 
 
 def main(puzzle_input):
