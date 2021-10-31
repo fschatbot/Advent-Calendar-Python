@@ -1,6 +1,9 @@
 import itertools
+
 split_data = True
+completed = True
 raw_data = None # Not To be touched
+
 route_map = {}
 destinations = []
 

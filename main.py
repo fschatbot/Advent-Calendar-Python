@@ -1,5 +1,7 @@
 import requests
 import importlib
+
+from requests import models
 import config
 from os.path import exists
 from time import time
@@ -19,6 +21,9 @@ else:
 # Run the Code
 module = importlib.import_module(f'{config.year}.{config.day}')
 module.raw_data = raw_data
+if not module.completed:
+	print("WARNING: This answer is still not complete and it may be wrong")
+
 start = time()
 answer1 = module.part1(raw_data.split('\n') if module.split_data else raw_data)
 print("The answer to the 1st part is:", answer1)
