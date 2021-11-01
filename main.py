@@ -58,14 +58,14 @@ def run_code() -> None:
 	end = time()
 	print("The answer to the 1st part is:", answer1)
 	# If the total time is above 0.01 secounds then we show it in secounds otherwise we show it in milliseconds
-	time_taken = f'{end - start:,.2}s' if end - start > 0.01 else f'{(end - start) * 1000:,.3}ms'
+	time_taken = f'{end - start:,.3}s' if end - start > 0.01 else f'{(end - start) * 1000:,.3}ms'
 	print(f"The 1st answer was calculated in just {time_taken}")
 	# Part 2
 	start = time()
 	answer2 = module.part2(raw_data.split('\n') if module.split_data else raw_data)
 	end = time()
 	print("The answer to the 2nd part is:", answer2)
-	time_taken = f'{end - start:,.2}s' if end - start > 0.01 else f'{(end - start) * 1000:,.3}ms'
+	time_taken = f'{end - start:,.3}s' if end - start > 0.01 else f'{(end - start) * 1000:,.3}ms'
 	print(f"The 1st answer was calculated in just {time_taken}")
 
 if __name__ == "__main__":
