@@ -77,5 +77,8 @@ if __name__ == "__main__":
 	else:
 		print("Collecting Data",end="\r")
 		collect_data(False)
+		if not raw_data:
+			print("Looks like the data doesn't exsist! Refetching data", end="\r")
+			collect_data(True)
 		print("Running Code...",end="\r")
 		run_code()
