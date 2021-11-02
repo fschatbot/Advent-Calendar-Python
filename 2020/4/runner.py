@@ -1,11 +1,10 @@
 import re
 
-split_data = False
+split_data = '\n\n'
 completed = False
 raw_data = None # Not To be touched
 
-def process_data(data):
-	passports = data.split('\n\n')
+def process_data(passports):
 	new_passports = []
 	for passport in passports:
 		new_passport_str = passport.replace('\n' ,' ')
