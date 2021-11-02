@@ -8,7 +8,7 @@ def process_data(data):
 	passports = data.split('\n\n')
 	new_passports = []
 	for passport in passports:
-		new_passport_str = ' '.join(passport.split('\n'))
+		new_passport_str = passport.replace('\n' ,' ')
 		new_passport = {}
 		for detail in new_passport_str.split(' '):
 			key, value = detail.split(':')
