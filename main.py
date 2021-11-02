@@ -48,13 +48,20 @@ def run_code() -> None:
 	"""This function is responsible for running the code from the given year and day
 	After the complete run of each part the answer is printed in the console with the amount of time it took to run"""
 	module = importlib.import_module(module_path.replace('/','.'))
-	module.raw_data = raw_data
 	if not module.completed:
 		print("\nWARNING: This answer is still not complete and it may be wrong\n")
+	
+	# Splitting the data into parts
+	if module.split_data == True:
+		module.raw_data = raw_data.split('\n')
+	elif isinstance(module.split_data, str):
+		module.raw_data = raw_data.split(module.split_data)
+	else:
+		module.raw_data = raw_data
 
 	# Part 1
 	start = time()
-	answer1 = module.part1(raw_data.split('\n') if module.split_data else raw_data)
+	answer1 = module.part1(module.raw_data)
 	end = time()
 	print("The answer to the 1st part is:", answer1)
 	# If the total time is above 0.01 secounds then we show it in secounds otherwise we show it in milliseconds
@@ -62,7 +69,7 @@ def run_code() -> None:
 	print(f"The 1st answer was calculated in just {time_taken}")
 	# Part 2
 	start = time()
-	answer2 = module.part2(raw_data.split('\n') if module.split_data else raw_data)
+	answer2 = module.part2(module.raw_data)
 	end = time()
 	print("The answer to the 2nd part is:", answer2)
 	time_taken = f'{end - start:,.3}s' if end - start > 0.01 else f'{(end - start) * 1000:,.3}ms'
