@@ -1,6 +1,6 @@
 import numpy as np
 split_data = True
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 grid_shape = (100, 100)
