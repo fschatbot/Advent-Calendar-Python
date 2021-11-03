@@ -1,7 +1,7 @@
 import re
 
 split_data = '\n\n'
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 def process_data(passports):

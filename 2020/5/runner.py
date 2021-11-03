@@ -1,5 +1,5 @@
 split_data = True
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 def proccess_data(data):

@@ -1,5 +1,5 @@
 split_data = '\n\n'
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 def part1(data):
