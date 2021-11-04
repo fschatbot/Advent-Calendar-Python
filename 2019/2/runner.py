@@ -23,6 +23,7 @@ def part1(data):
 	return data[0]
 
 def part2(data):
+	# TODO: COMPLETE THIS
 	# Almost same from the previous part, but we need to find the right values
 	data = list(map(int, data))
 	data[1] = 12
