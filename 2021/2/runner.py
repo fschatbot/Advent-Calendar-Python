@@ -1,5 +1,5 @@
 split_data = True
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 def part1(data):
@@ -17,4 +17,16 @@ def part1(data):
 
 
 def part2(data):
-	pass
+	hp = 0 # HP = Horizontal position
+	dept = 0
+	aim = 0
+	for line in data:
+		command,amount = line.split()
+		if command == "forward":
+			hp += int(amount)
+			dept += aim * int(amount)
+		elif command == "down":
+			aim += int(amount)
+		elif command == "up":
+			aim -= int(amount)
+	return hp * dept
