@@ -9,7 +9,7 @@ def BTN(binary):
 
 def part1(data):
 	rearranged_data = []
-	# We are doing this because we are rearranging the data veritcally than horizontally
+	# We are going to rearrange the data veritcally than horizontally to find common digits
 	for line in data:
 		for index, char in enumerate(line):
 			try:
