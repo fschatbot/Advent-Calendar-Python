@@ -18,21 +18,28 @@ def part1(data):
 
 
 def part2(data):
-	# Expecting a 7
 	mem = list(map(int, data))
+	# We create a simple hashmap with all the previous values
+	# The hashtable contains the number with the index of it's occurences
 	hashmap = {
 		x: [i] for i, x in enumerate(mem)
 	}
+	# Next we loop through the list till 30 million. Took me 47.7s
+	# The i is the index in the mem ;)
 	for i in range(len(data), 30_000_000):
 		last = mem[-1]
+		# Check if only one instance exists
 		if len(hashmap[last]) == 1:
 			mem.append(0)
 			hashmap[0].append(i)
 		else:
+			# Storing in variable to avoid multiple calculations and lookups
 			num = hashmap[last][-1] - hashmap[last][-2]
 			mem.append(num)
+			# This is done is order to deal we creation of new values
 			if num not in hashmap:
 				hashmap[num] = [i]
 			else:
 				hashmap[num].append(i)
+		# After each run we add last value to the hashmap with it's index
 	return mem[-1]
