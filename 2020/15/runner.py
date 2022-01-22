@@ -29,9 +29,10 @@ def part2(data):
 			mem.append(0)
 			hashmap[0].append(i)
 		else:
-			mem.append(hashmap[last][-1] - hashmap[last][-2])
-			try:
-				hashmap[hashmap[last][-1] - hashmap[last][-2]].append(i)
-			except KeyError:
-				hashmap[hashmap[last][-1] - hashmap[last][-2]] = [i]
+			num = hashmap[last][-1] - hashmap[last][-2]
+			mem.append(num)
+			if num not in hashmap:
+				hashmap[num] = [i]
+			else:
+				hashmap[num].append(i)
 	return mem[-1]
