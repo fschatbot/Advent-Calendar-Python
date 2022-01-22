@@ -18,4 +18,20 @@ def part1(data):
 
 
 def part2(data):
-	pass
+	# Expecting a 7
+	mem = list(map(int, data))
+	hashmap = {
+		x: [i] for i, x in enumerate(mem)
+	}
+	for i in range(len(data), 30_000_000):
+		last = mem[-1]
+		if len(hashmap[last]) == 1:
+			mem.append(0)
+			hashmap[0].append(i)
+		else:
+			mem.append(hashmap[last][-1] - hashmap[last][-2])
+			try:
+				hashmap[hashmap[last][-1] - hashmap[last][-2]].append(i)
+			except KeyError:
+				hashmap[hashmap[last][-1] - hashmap[last][-2]] = [i]
+	return mem[-1]
