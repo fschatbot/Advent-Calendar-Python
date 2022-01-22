@@ -1,14 +1,19 @@
 import requests
 import importlib
-
-from requests import models
 import config
 from os import path, makedirs
 from time import time
+import argparse
 
-folder_path = f'{config.year}/{config.day}/'
-txt_path = f'{config.year}/{config.day}/input.txt'
-module_path = f'{config.year}/{config.day}/runner'
+parser = argparse.ArgumentParser(description='Manually Enter Year and Day')
+parser.add_argument('-d', '--day', type=int, help='The year of the day', default=config.day)
+parser.add_argument('-y','--year', type=int, help='The day from which you require the answer', default=config.year)
+args = parser.parse_args()
+
+
+folder_path = f'{args.year}/{args.day}/'
+txt_path = f'{args.year}/{args.day}/input.txt'
+module_path = f'{args.year}/{args.day}/runner'
 raw_data = None
 
 # collect the data
@@ -16,7 +21,7 @@ def collect_data(force) -> None:
 	"""A simple function to calculate data"""
 	global raw_data
 	if not path.exists(txt_path) or force:
-		response = requests.get(f'https://adventofcode.com/{config.year}/day/{config.day}/input', cookies={'session':config.session_cookie})
+		response = requests.get(f'https://adventofcode.com/{args.year}/day/{args.day}/input', cookies={'session':config.session_cookie})
 		raw_data = response.text.strip()
 		# Save the data for backup
 		if response.status_code == 200:
