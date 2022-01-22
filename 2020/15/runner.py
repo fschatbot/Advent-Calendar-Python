@@ -24,7 +24,7 @@ def part2(data):
 	hashmap = {
 		x: [i] for i, x in enumerate(mem)
 	}
-	# Next we loop through the list till 30 million. Took me 47.7s
+	# Next we loop through the list till 30 million.
 	# The i is the index in the mem ;)
 	for i in range(len(data), 30_000_000):
 		last = mem[-1]
@@ -42,4 +42,5 @@ def part2(data):
 			else:
 				hashmap[num].append(i)
 		# After each run we add last value to the hashmap with it's index
+	# It took me 47.7s and 34.7s to find the answer
 	return mem[-1]
