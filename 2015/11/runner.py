@@ -1,8 +1,7 @@
 import re
-from tabnanny import check
 
 split_data = False
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 # The string does not contain i,o,l as they will be skipped anyways
