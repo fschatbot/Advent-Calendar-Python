@@ -12,16 +12,20 @@ def complile_data(data):
 def replace_index(string, index, old_str, new_str, count):
 	return string[:index] + string[index:].replace(old_str, new_str, count)
 
-def part1(data):
-	molecule, replacements  = complile_data(data)
+def replace_molecules(molecule, data):
 	combinations = []
-	for name, replacement in replacements:
+	for name, replacement in data:
 		# Get all the indexes of the replacement in the molecule
 		# Answer taken from https://stackoverflow.com/a/4664889/13703806
 		indexes = [m.start() for m in re.finditer(name, molecule)]
 		for index in indexes:
 			new_molecule = replace_index(molecule, index, name, replacement, 1)
 			combinations.append(new_molecule)
+	return combinations
+
+def part1(data):
+	molecule, replacements  = complile_data(data)
+	combinations = replace_molecules(molecule, replacements)
 	return len(set(combinations))
 
 def part2(data):
