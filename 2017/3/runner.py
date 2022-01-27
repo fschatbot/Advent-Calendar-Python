@@ -28,8 +28,11 @@ def part1(data):
 	# How far our number is from the smallest number in the ring
 	distance = data - ((4 * (ring**2)) - (11 * ring) + 8)
 	# Now we somewhat do a simulation of the grid just to convert our distance to a grid position
-	# This estially creates a array with numbers going up and down. Ex: 2, 3, 4, 3
-	# This allows up to warp our distance in this list and return the corresponding distance from 0
+	# This estially creates a array with numbers going up to down. Ex: 3, 4, 5, 6, 5, 4
+	# This allows us to warp our distance in this list and return the corresponding distance from 0
+	# Biggest number formula is 2(r-1)
+	# Smallest number formula is r-1
+	# r represents the ring number
 	grid_layout = [*range(ring-1, 2*(ring-1)), *range(2*(ring-1), ring-1, -1)]
 	# Now we simply warp the distance to the grid and return the answer
 	return grid_layout[distance % len(grid_layout)]
