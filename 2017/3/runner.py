@@ -34,8 +34,5 @@ def part1(data):
 	# Now we simply warp the distance to the grid and return the answer
 	return grid_layout[distance % len(grid_layout)]
 
-
-	return ring
-
 def part2(data):
 	pass
