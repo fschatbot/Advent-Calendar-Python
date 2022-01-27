@@ -9,6 +9,7 @@ def part1(data):
 	# I spent my weekend over this problem and I over-engineered my answer!
 	# Instead of simulating the grid, I am calculating the answer using quadratics
 	# So this is a more of a mathamatical solution than a computer solution
+	# This solution is O(sqrt(n)) meaning most of the time is spent in converting the number to the distance from the center
 	# 
 	# I am using the quadratic formula to find the ring number that this number is in
 	# The Formula was derived from the lowest numbers and largest numbers in each ring
