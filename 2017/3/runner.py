@@ -1,4 +1,3 @@
-from dis import dis
 from math import sqrt, trunc
 
 split_data = False
