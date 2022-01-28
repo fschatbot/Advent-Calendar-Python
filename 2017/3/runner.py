@@ -1,4 +1,5 @@
 from math import sqrt, trunc
+import numpy as np
 
 split_data = False
 completed = False
@@ -39,4 +40,22 @@ def part1(data):
 	return grid_layout[distance % len(grid_layout)]
 
 def part2(data):
-	pass
+	data = int(data)
+	# Because we can't create a infinite grid, we will simply create a big grid instead
+	# Just to keep it simple, we will make it odd * odd
+	# This will give it a center
+	grid = np.zeros((1001, 1001))
+	def set_value(x, y , value):
+		# Done because of weird numpy indexing behavior
+		grid[x-1:y-1] = value
+	# Ok I am being honest, I have no clue as why this does not work. Numpy is weird!
+	def get_neighbours(x, y):
+		return grid[x-1:y-1].sum()
+	set_value(500, 500, 1)
+
+	grid1 = np.zeros((5,5), dtype=np.int)
+	grid1 = np.ndarray(shape=(5,5), dtype=np.int)
+	grid1[2:2] = 1
+	print(grid1)
+	x, y = 3, 3
+	print(grid1[y+1:x+1, 0:1])
