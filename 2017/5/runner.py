@@ -25,4 +25,19 @@ def part1(data):
 
 
 def part2(data):
-	pass
+	# This is same as the previous one
+	# So half the code is taken from the function above
+	ins = list(map(int, data))
+	last_index = None
+	curr_index = 0
+	total_step = 0
+	while curr_index < len(ins):
+		last_index = curr_index
+		curr_index += ins[curr_index]
+		# This is for if the value is 3 or bigger we decrese it by 1, else we increase it by 1
+		if ins[last_index] >= 3:
+			ins[last_index] -= 1
+		else:
+			ins[last_index] += 1
+		total_step += 1
+	return total_step
