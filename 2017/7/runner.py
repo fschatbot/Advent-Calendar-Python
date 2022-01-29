@@ -105,7 +105,7 @@ def collapes_tower(tower_value):
 		# A true return means it is the answer to our problem
 		# Hence we skip everything else and return it down the tree and back to the part1 as fast as possible
 		# However if we don't get a true return we simply replace the child with it's weight
-		if true_return: return weight
+		if true_return: return weight, True
 		else: tower_value['children'].append(weight)
 	# Next we compare to see if the children have the same weight, If not then boom we found the problem
 	odd_one = FindTheOddOneOut(tower_value['children'])
@@ -115,7 +115,6 @@ def collapes_tower(tower_value):
 		# This returns the differnce in weight between the odd one and the other child
 		diff = odd_one[1] - sum(unbalanced_child)
 		# We combine the difference and we get our answer which we pass down the tree
-		print(unbalanced_child[0] + diff)
 		return unbalanced_child[0] + diff, True
 	else:
 		# Return the weight of the children plus the inital weight of the tower and false
