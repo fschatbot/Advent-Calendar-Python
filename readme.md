@@ -23,6 +23,7 @@ When I first learnt about advent calendar, I was sure I could solve it under min
 - Add a `requirements.txt` file with al the dependencies
 - If the `config.py` doesn't exist, create it from the template
 - Create a github workflow that generates a site to logs all the progress
-- Complete all the days	from all the years
+- Complete all the days from all the years
 - Change the folder structure to [year] -> [day].py and [year] -> inputs -> [day].txt
 - Make it so the `split_data` can also be a function
+- Add a stats option so the user can see how many challenges he has completed
