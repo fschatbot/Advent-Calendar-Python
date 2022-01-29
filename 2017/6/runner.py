@@ -1,13 +1,9 @@
 split_data = '\t'
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
-def part1(data):
-	# This creates a list of mem blocks
-	data = list(map(int, data))
-	# Next create a list and a temp block to see if the block has appeared in the list
+def redistribute_until_loop(rect_block):
 	occurances = []
-	rect_block = data
 	while rect_block not in occurances:
 		# If not then append the block in the list
 		# we are creating a copy because if we change the rect_block later it will also change the one in the list
@@ -26,8 +22,20 @@ def part1(data):
 			index = (index + 1) % (len(rect_block))
 			rect_block[index] += 1
 			num -= 1
-		
-	return len(occurances)
+	# Now we add the rect_block to the occurances list to be used in part2
+	occurances.append(rect_block)
+	return occurances
+
+def part1(data):
+	# This creates a list of mem blocks
+	data = list(map(int, data))
+	occurances = redistribute_until_loop(data)
+	# We are subtracting 1 because we added an extra for part2
+	return len(occurances) - 1
 
 def part2(data):
-	pass
+	data = list(map(int, data))
+	occurances = redistribute_until_loop(data)
+	# We subtract the index of when the first of the double occuercense was found from the length of the occurances list
+	# This gives us the cycles it took for the loop, hence the answer
+	return (len(occurances) - 1) - occurances.index(occurances[-1])
