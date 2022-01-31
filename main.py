@@ -10,10 +10,9 @@ parser.add_argument('-d', '--day', type=int, help='The year of the day', default
 parser.add_argument('-y','--year', type=int, help='The day from which you require the answer', default=config.year)
 args = parser.parse_args()
 
-
-folder_path = f'{args.year}/{args.day}/'
-txt_path = f'{args.year}/{args.day}/input.txt'
-module_path = f'{args.year}/{args.day}/runner'
+folder_path = f'{args.year}/'
+txt_path = f'{args.year}/inputs/{args.day}.txt'
+module_path = f'{args.year}/{args.day}'
 raw_data = None
 
 # collect the data
@@ -21,6 +20,11 @@ def collect_data(force) -> None:
 	"""A simple function to calculate data"""
 	global raw_data
 	if not path.exists(txt_path) or force:
+		# Make the input folder just incase
+		try:
+			makedirs(folder_path+'inputs')
+		except FileExistsError:
+			pass
 		response = requests.get(f'https://adventofcode.com/{args.year}/day/{args.day}/input', cookies={'session':config.session_cookie})
 		raw_data = response.text.strip()
 		# Save the data for backup
@@ -41,7 +45,7 @@ def setup() -> None:
 	"""This function creates the folder with the template and the input sheet already in it"""
 	global raw_data
 	try:
-		makedirs(folder_path)
+		makedirs(folder_path+'inputs')
 	except FileExistsError:
 		pass
 	collect_data(True)
@@ -83,7 +87,7 @@ def run_code() -> None:
 	print(f"The 1st answer was calculated in just {time_taken}")
 
 if __name__ == "__main__":
-	if not path.exists(folder_path):
+	if not path.exists(module_path+'.py'):
 		print("Looks like this day has not been answered yet!")
 		print("I will create a folder with the template for you to answer it ;)")
 		setup()
