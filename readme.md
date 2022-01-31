@@ -1,5 +1,5 @@
 # Advent of Code
-<img alt="Pytho" src="https://img.shields.io/badge/python-3776AB?logo=python&style=for-the-badge&logoColor=white"/>
+<img alt="Python" src="https://img.shields.io/badge/python-3776AB?logo=python&style=for-the-badge&logoColor=white"/>
 
 ## How to use
 
