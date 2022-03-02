@@ -1,6 +1,18 @@
 import requests
 import importlib
-import config
+try:
+	import config
+except ImportError:
+	# Generate the config file
+	print("You didn't have the config filem, so i created one! Please edit it and enter your session cookie in the file!")
+	# Read the template
+	with open('config-template.py','r') as file:
+		lines = file.readlines()
+	with open('config.py','w') as file:
+		# Write the lines that do not start with a #
+		[file.write(line) for line in lines if not line.startswith('#')]
+	# Exit the program
+	exit()
 from os import path, makedirs
 from time import time
 import argparse
