@@ -1,6 +1,5 @@
-from math import *
 split_data = False
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 def factor_sum(num):
@@ -9,9 +8,6 @@ def factor_sum(num):
 	return sum(factors)
 
 def part1(data):
-	# We wan't to find which house gets the gifts as suggested in the puzzle
-	# we will not multiple by 10 to save time, by that I mean very so slithly cause it will take a huge amount of time
-	# If you want a faster solution check https://github.com/Peter200lx/advent-of-code/blob/master/2015/day20.py but beaware I didn't understand hence I didn't use it
 	num = int(data) // 10
 	# We are just going to keep on delivering presents to each house until we get to the house we are looking for
 	houses = [0] * num
@@ -28,4 +24,19 @@ def part1(data):
 			return index + 1
 
 def part2(data):
-	pass
+	# The code in part2 is copied from part1
+	# Dividing by 11 and not 10 because we deliver 11 presents each time and not 10
+	num = int(data) // 11
+	houses = [0] * num
+	for i in range(1, num):
+		# Make a counter to keep track of the number of times a present is delivered
+		counter = 0
+		for j in range(i-1, num, i):
+			# Simple check to see if the counter is not above 50
+			if counter > 50: break
+			# Deliver the present and increment the counter
+			houses[j] += i * 11
+			counter += 1
+	for index, house in enumerate(houses):
+		if house >= int(data):
+			return index + 1
