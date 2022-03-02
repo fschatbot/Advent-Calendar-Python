@@ -1,5 +1,9 @@
 import requests
 import importlib
+from os import path, makedirs
+from time import time
+import argparse
+
 try:
 	import config
 except ImportError:
@@ -13,9 +17,6 @@ except ImportError:
 		[file.write(line) for line in lines if not line.startswith('#')]
 	# Exit the program
 	exit()
-from os import path, makedirs
-from time import time
-import argparse
 
 parser = argparse.ArgumentParser(description='Manually Enter Year and Day')
 parser.add_argument('-d', '--day', type=int, help='The year of the day', default=config.day)
