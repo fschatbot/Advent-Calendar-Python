@@ -87,7 +87,7 @@ def run_code() -> None:
 
 	# Part 1
 	start = time()
-	answer1 = module.part1(module.raw_data.copy() if not isinstance(module.raw_data, str) else raw_data)
+	answer1 = module.part1(module.raw_data.copy() if isinstance(module.raw_data, (dict, list)) else raw_data)
 	end = time()
 	print("The answer to the 1st part is:", answer1)
 	# If the total time is above 0.01 secounds then we show it in secounds otherwise we show it in milliseconds
@@ -95,7 +95,7 @@ def run_code() -> None:
 	print(f"The 1st answer was calculated in just {time_taken}")
 	# Part 2
 	start = time()
-	answer2 = module.part2(module.raw_data.copy() if not isinstance(module.raw_data, str) else raw_data)
+	answer2 = module.part2(module.raw_data.copy() if isinstance(module.raw_data, (dict, list)) else raw_data)
 	end = time()
 	print("The answer to the 2nd part is:", answer2)
 	time_taken = f'{end - start:,.3}s' if end - start > 0.01 else f'{(end - start) * 1000:,.3}ms'
