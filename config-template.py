@@ -1,4 +1,3 @@
-
 # Over Here you enter the year of the Advent Calendar 20xx
 year = 2015
 # Over Here you are going to type in the day 1 - 31
