@@ -30,9 +30,15 @@ def remove_dup(num_list):
 		
 
 def part1(data):
+	# The problem with this program is that it just keeps on repeating itself and finding pairs that are identical but ordered differently
 	# The weight of each group
 	aim = sum(data) // 3
-	pairs = remove_dup(find_group(data, aim, []))
+	groups = remove_dup(find_group(data, aim, []))
+	# Find the smallest group length
+	glen = len(min(groups, key=lambda x: len(x)))
+	# Find all groups with the same length
+	smallest_groups = [x for x in groups if len(x) == glen]
+	return smallest_groups
 
 def part2(data):
 	pass
