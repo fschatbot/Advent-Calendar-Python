@@ -18,11 +18,13 @@ def part1(data):
 	# Loop Through Each Number
 	for i in range(1, num):
 		# Loop through all the houses that this number is going to visit and deliver the present
-		for j in range(i, num, i):
+		# Starting from i-1 because we need to take 0 in account
+		for j in range(i-1, num, i):
 			houses[j] += i
 	# Check for which house has the number we are looking for
 	for index, house in enumerate(houses):
-		if house == num:
+		# ok we need to see which house have "ATLEAST" the number of presents we are looking for, instead of which house has "EXACTLY" the number of presents
+		if house >= num:
 			return index + 1
 
 def part2(data):
