@@ -1,4 +1,4 @@
-split_data = False
+split_data = int
 completed = True
 raw_data = None # Not To be touched
 
@@ -8,7 +8,7 @@ def factor_sum(num):
 	return sum(factors)
 
 def part1(data):
-	num = int(data) // 10
+	num = data // 10
 	# We are just going to keep on delivering presents to each house until we get to the house we are looking for
 	houses = [0] * num
 	# Loop Through Each Number
@@ -26,7 +26,7 @@ def part1(data):
 def part2(data):
 	# The code in part2 is copied from part1
 	# Dividing by 11 and not 10 because we deliver 11 presents each time and not 10
-	num = int(data) // 11
+	num = data // 11
 	houses = [0] * num
 	for i in range(1, num):
 		# Make a counter to keep track of the number of times a present is delivered
@@ -38,5 +38,5 @@ def part2(data):
 			houses[j] += i * 11
 			counter += 1
 	for index, house in enumerate(houses):
-		if house >= int(data):
+		if house >= data:
 			return index + 1
