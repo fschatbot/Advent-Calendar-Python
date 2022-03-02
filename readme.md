@@ -22,7 +22,6 @@ When I first learnt about advent calendar, I was sure I could solve it under min
 
 ### TODO
 
-- Add a `requirements.txt` file with all the dependencies
 - If the `config.py` doesn't exist, create it from the template
 - Create a github workflow that generates a site to logs all the progress
 - Complete all the days from all the years
