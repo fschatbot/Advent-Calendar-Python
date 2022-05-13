@@ -25,7 +25,7 @@ def part1(data):
 		visited.append(coords.copy()) # Only for CSV
 	# Open the csv and copy paste the data in desmos. It will help you visualize the data
 	csv = '\n'.join(','.join(str(i) for i in x) for x in visited)
-	with open('dump.csv', 'w') as file:
+	with open('2016/day 1 - step dump.csv', 'w') as file:
 		file.write(csv)
 	
 	return abs(coords[0]) + abs(coords[1])
