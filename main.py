@@ -79,7 +79,7 @@ def run_code() -> None:
 	if module.split_data == True:
 		module.raw_data = raw_data.split('\n')
 	elif isinstance(module.split_data, str):
-		module.raw_data = raw_data.split(module.split_data)
+		module.raw_data = [x.strip() for x in raw_data.split(module.split_data)]
 	elif callable(module.split_data):
 		module.raw_data = module.split_data(raw_data)
 	else:
