@@ -1,4 +1,4 @@
 __pycache__
 config.py
 */inputs/*.txt
-*.dump.csv
+*.dump.*
