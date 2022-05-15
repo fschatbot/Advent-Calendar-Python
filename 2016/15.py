@@ -21,8 +21,6 @@ def part1(data):
 		else:
 			return time
 
-
-
 def part2(data):
 	# The code is litteray the same but we add another disk to the list
 	disks = process_data(data)
