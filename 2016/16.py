@@ -16,10 +16,7 @@ def generate_checksum(data):
 	# Generating the checksum
 	checksum = ''
 	for i in range(0, len(data), 2):
-		if data[i] == data[i+1]:
-			checksum += '1'
-		else:
-			checksum += '0'
+		checksum += '1' if data[i] == data[i+1] else '0'
 	# Check wheter the length of checksum is even
 	if len(checksum) % 2 == 0:
 		return generate_checksum(checksum)
