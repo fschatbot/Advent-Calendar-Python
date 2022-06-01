@@ -1,7 +1,7 @@
 from hashlib import md5
 
 split_data = False
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 def hash(password, path):
