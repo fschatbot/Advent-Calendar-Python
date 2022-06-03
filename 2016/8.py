@@ -1,7 +1,7 @@
 import numpy as np
 
 split_data = True
-completed = True
+completed = False
 raw_data = None # Not To be touched
 
 # If I am being honest, this is the most fun challenge
@@ -47,4 +47,4 @@ def part2(data):
 	display[display == '0'] = ' '
 	for row in display:
 		print(''.join(row))
-	return 'This time, there will be no returned output as its super hard to guess all the letter patterns. However, a human can read the above display and figure out the output!'
+	print('This time, there will be no returned output as its super hard to guess all the letter patterns. However, a human can read the above display and figure out the output!')
