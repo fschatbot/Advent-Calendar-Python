@@ -11,7 +11,8 @@ def part1(data):
 	def bfs(queue, visited, dept):
 		next_queue = [] # The next move to take
 		for coord in queue: # For each coordinate in the queue
-			for movement in [(coord[0]+1, coord[1]), (coord[0]-1, coord[1]), (coord[0], coord[1]+1), (coord[0], coord[1]-1)]:
+			for mx, my in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+				movement = coord[0] + mx, coord[1] + my
 				# Loop through all next possible movements for that move
 				if movement[0] < 0 or movement[1] < 0 or movement in visited: continue # Make sure to have positive coordinates and are not already visited
 				if movement == (31, 39): # If we are at the destination we are done
@@ -35,7 +36,8 @@ def part2(data):
 		if dept > 50: return visited
 		next_queue = [] # The next move to take
 		for coord in queue: # For each coordinate in the queue
-			for movement in [(coord[0]+1, coord[1]), (coord[0]-1, coord[1]), (coord[0], coord[1]+1), (coord[0], coord[1]-1)]:
+			for mx, my in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+				movement = coord[0] + mx, coord[1] + my
 				# Loop through all next possible movements for that move
 				if movement[0] < 0 or movement[1] < 0 or movement in visited: continue # Make sure to have positive coordinates and are not already visited
 				elif isOpenSpace(*movement): # If the next coordinate is valid
