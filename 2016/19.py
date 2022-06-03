@@ -16,8 +16,14 @@ def part2(data):
 	# We also notice that any number after that is just increasing by 1.
 	# If we look at the corelation, we can see that ans the largest power of 3 possbile subtracted from the target
 
-	# We can get the largest power of 3 by taking the floor of log(target) with base 3
-	# Next we simply subtract the answer from the target
+	# We simply need the largest power of 3 that is less than the target
+	# Taking a log of the target might will fail if the target is a power of 3
 
 	target = int(data)
-	return target - 3 ** floor(log(target, 3))
+	i = 1
+
+	while i * 3 < target:
+		i *= 3
+
+	return target - i
+
