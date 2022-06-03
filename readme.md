@@ -29,3 +29,7 @@ When I first learnt about advent calendar, I was sure I could solve it under min
 - Create a github workflow that generates a site to logs all the progress
 - Complete all the days from all the years
 - Add a stats option so the user can see how many challenges he has completed
+- If the tag `--answer` is passed in the cli. Then it will automatically answer the question on that account
+  - If an array is returned then it will try answering with every array
+  - If the answer is not accepted. Then it will mark the day as not done and report it in the terminal
+- Add a `--all` option to run all the days and answer all the questions
