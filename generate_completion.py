@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 COMPLETED = '✔' # Alternative: ✓
 NOT_COMPLETED = '❌'
 SEMI_COMPLETED = '½'
+NOT_ATTEMPTED = '🚫'
 
 def generate_table(solutions):
 	# This will manage the top of the table
@@ -33,10 +34,10 @@ def check_day(year:int, day:int):
 	try:
 		module = importlib.import_module(f'{year}.{day}')
 	except ModuleNotFoundError:
-		return NOT_COMPLETED
-	if module.completed:
+		return NOT_ATTEMPTED
+	if module.completed == True:
 		return COMPLETED
-	elif isEmpty(module.part1) ^ isEmpty(module.part2):
+	elif module.completed == 1:
 		# Only runned if one parts is incomplete
 		return SEMI_COMPLETED
 	else:
@@ -55,14 +56,16 @@ def get_all_years():
 
 def get_year_completion(year:str):
 	# Check all the days from 1 to 25
-	return [check_day(year, day) for day in range(1, 26)]
+	solutions = [check_day(year, day) for day in range(1, 26)]
+	print(f"Generated solution for year {year}: {' '.join(solutions)}")
+	return solutions
 
 
 def generate_completion():
 	years = get_all_years()
 	print("Number Of years we are looking: ", len(years))
 	solutions = {year: get_year_completion(year) for year in years}
-	print("Geneerated solution status!")
+	print("Generated solution status!")
 	table = generate_table(solutions)
 	print("Generated Solution table!")
 
@@ -80,6 +83,13 @@ Over Here you can see the completion status of the project.
 Parts Completed: {flattened_solutions.count(COMPLETED)*2 + flattened_solutions.count(SEMI_COMPLETED)}/{len(solutions.keys()) * 25 * 2}
 <br>
 Days Completed: {flattened_solutions.count(COMPLETED)}/{len(solutions.keys()) * 25}
+
+### Legend
+
+- {COMPLETED} = Part Completed
+- {SEMI_COMPLETED} = One of the parts have been completed
+- {NOT_COMPLETED} = The Day has been attempted but not completed
+- {NOT_ATTEMPTED} = Day has not even been attempted
 
 {table}
 	'''.strip()
