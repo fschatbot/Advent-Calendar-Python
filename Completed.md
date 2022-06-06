@@ -2,9 +2,9 @@
 
 Over Here you can see the completion status of the project.
 
-Parts Completed: 123/350
+Parts Completed: 123/350 (35.14%)
 <br>
-Days Completed: 60/175
+Days Completed: 60/175 (34.29%)
 
 ### Legend
 
