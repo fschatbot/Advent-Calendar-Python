@@ -73,6 +73,9 @@ def generate_completion():
 	for year in solutions.values():
 		flattened_solutions += year
 
+	parts_completed = flattened_solutions.count(COMPLETED) * 2 + flattened_solutions.count(SEMI_COMPLETED)
+	days_completed = flattened_solutions.count(COMPLETED)
+
 	# String That Will be written to the file
 
 	file_text = f'''
@@ -80,9 +83,9 @@ def generate_completion():
 
 Over Here you can see the completion status of the project.
 
-Parts Completed: {flattened_solutions.count(COMPLETED)*2 + flattened_solutions.count(SEMI_COMPLETED)}/{len(solutions.keys()) * 25 * 2}
+Parts Completed: {parts_completed}/{len(flattened_solutions) * 2} ({parts_completed / (len(flattened_solutions) * 2) * 100:,.2f}%)
 <br>
-Days Completed: {flattened_solutions.count(COMPLETED)}/{len(solutions.keys()) * 25}
+Days Completed: {days_completed}/{len(flattened_solutions)} ({days_completed / (len(flattened_solutions)) * 100:,.2f}%)
 
 ### Legend
 
