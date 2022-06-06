@@ -67,5 +67,5 @@ def part2(data):
 	for i in permutations(scrambled):
 		if scramble(i, data) == scrambled:
 			possible.append(''.join(i))
-	# There can be multiple possibilities, so we return all the possible inputs
-	return possible
+	# There can be multiple possibilities, so we return the first one
+	return possible[0]
