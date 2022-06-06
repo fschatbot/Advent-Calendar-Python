@@ -1,18 +1,24 @@
 split_data = True
-completed = 1
+completed = True
 raw_data = None # Not To be touched
 
 def part1(data):
 	return sum(map(int, data))
 
-def part2(data, frequency=[0]):
-	# TODO: FIX THIS ONE
-	return "This one doesn't work please don't use it. Only part 1 works. for now"
-	for freq in map(int, data):
-		new_freq = frequency[-1] + freq
-		if new_freq in frequency:
-			return new_freq
-		else:
-			frequency.append(new_freq)
-	else:
-		return part2(data, frequency)
+def part2(data):
+
+	past_freq = [0] # All the past frequencies
+	freq = 0 # Current Frequency
+
+	# The below 3 lines help us create the effect of looping through the list again and again
+	index = -1
+	while True:
+		index = (index + 1) % len(data)
+
+		freq += int(data[index]) # Change the Current Frequency
+
+		# Check if the frequency has occured twice, if so, return it, else continue
+		if freq in past_freq:
+			return freq
+		past_freq.append(freq)
+
