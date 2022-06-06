@@ -60,8 +60,11 @@ def get_year_completion(year:str):
 
 def generate_completion():
 	years = get_all_years()
+	print("Number Of years we are looking: ", len(years))
 	solutions = {year: get_year_completion(year) for year in years}
+	print("Geneerated solution status!")
 	table = generate_table(solutions)
+	print("Generated Solution table!")
 
 	flattened_solutions = []
 	for year in solutions.values():
@@ -81,8 +84,12 @@ Days Completed: {flattened_solutions.count(COMPLETED)}/{len(solutions.keys()) * 
 {table}
 	'''.strip()
 
+	print("Generated File Text")
+
 	with open('Completed.md', 'w', encoding='utf-8') as f:
 		f.write(file_text)
+	
+	print("Wrote to file!")
 
 if __name__ == '__main__':
 	generate_completion()
