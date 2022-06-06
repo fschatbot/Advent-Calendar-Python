@@ -35,11 +35,11 @@ def check_day(year:int, day:int):
 		module = importlib.import_module(f'{year}.{day}')
 	except ModuleNotFoundError:
 		return NOT_ATTEMPTED
-	if module.completed == True:
-		return COMPLETED
-	elif module.completed == 1:
+	if module.completed == 1:
 		# Only runned if one parts is incomplete
 		return SEMI_COMPLETED
+	elif module.completed:
+		return COMPLETED
 	else:
 		return NOT_COMPLETED
 
