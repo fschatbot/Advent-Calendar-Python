@@ -75,7 +75,7 @@ def run_code() -> None:
 	"""This function is responsible for running the code from the given year and day
 	After the complete run of each part the answer is printed in the console with the amount of time it took to run"""
 	module = importlib.import_module(module_path.replace('/','.'))
-	if not module.completed:
+	if module.completed != True:
 		print("\nWARNING: This answer is still not complete and it may be wrong\n")
 	
 	# Splitting the data into parts

@@ -1,7 +1,7 @@
 import hashlib
 
 split_data = False
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 def part1(key):

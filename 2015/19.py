@@ -1,7 +1,5 @@
-import re
-
 split_data = '\n'
-completed = False
+completed = 1
 raw_data = None # Not To be touched
 
 def complile_data(data):

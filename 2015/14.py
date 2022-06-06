@@ -1,7 +1,7 @@
 import re, json
 
 split_data = True
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 speed_map = {}
