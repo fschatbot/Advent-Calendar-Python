@@ -1,8 +1,8 @@
-from math import sqrt, trunc
+from math import sqrt, floor
 import numpy as np
 
 split_data = False
-completed = False
+completed = 1
 raw_data = None # Not To be touched
 
 def part1(data):
@@ -10,36 +10,45 @@ def part1(data):
 	# I spent my weekend over this problem and I over-engineered my answer!
 	# Instead of simulating the grid, I am calculating the answer using quadratics
 	# So this is a more of a mathamatical solution than a computer solution
-	# This solution is O(sqrt(n)) meaning most of the time is spent in converting the number to the distance from the center
-	# 
+	# This solution is O(1) as its an instant solve no matter the number
+	
+	# Helper functions for solving and equating quadractics
+	def doQuod(a, b, c, x):
+		return (a * (x**2)) + (b * x) + c
+	
+	def solvQuod(a, b, c):
+		return (-b + sqrt((b**2) - (4 * a * c))) / (2 * a)
+	
 	# I am using the quadratic formula to find the ring number that this number is in
 	# The Formula was derived from the lowest numbers and largest numbers in each ring
 	# 
 	# Formulas:
-	# 	-> 4x^2 - 11x + 8 for the lowest numbers
-	# 	-> 4x^2 - 4x + 1 for the largest numbers
+	# 	-> 4x^2 - 4x + 2 for the lowest numbers
+	# 	-> 4x^2 - 4x + 1 for the largest numbers (unneeded)
 	# The x represents the ring number
-	# Now we are going to find the ring our number is from using the small number formula
+	# Now we are going to find the ring our number is in, by using the small number formula
 	
-	a = 4
-	b = -11
-	c = 8 - data
-	ring = (-b + sqrt((b**2) - (4 * a * c))) / (2 * a)
-	# This will simply remove the unwanted decimals
-	ring = trunc(ring)
-	# How far our number is from the smallest number in the ring
-	distance = data - ((4 * (ring**2)) - (11 * ring) + 8)
-	# Now we somewhat do a simulation of the grid just to convert our distance to a grid position
-	# This estially creates a array with numbers going up to down. Ex: 3, 4, 5, 6, 5, 4
-	# This allows us to warp our distance in this list and return the corresponding distance from 0
-	# Biggest number formula is 2(r-1)
-	# Smallest number formula is r-1
-	# r represents the ring number
-	grid_layout = [*range(ring-1, 2*(ring-1)), *range(2*(ring-1), ring-1, -1)]
-	# Now we simply warp the distance to the grid and return the answer
-	return grid_layout[distance % len(grid_layout)]
+	
+
+	# Equating it with the lowest number allows us to find which ring is the data is on
+	# However, the output is decimal so we floor to get rid of it
+	ring = floor(solvQuod(4, -4, 2 - data))
+
+	# Next we find all the middles in the given ring
+	# Formulas for of side middles in a ring:
+	# 	-> 4x^2 - 3x + 1 for mid 1
+	# 	-> 4x^2 - 1x + 1 for mid 2
+	# 	-> 4x^2 + 1x + 1 for mid 3
+	# 	-> 4x^2 + 3x + 1 for mid 4
+	middles = doQuod(4, -3, 1, ring), doQuod(4, -1, 1, ring), doQuod(4, 1, 1, ring), doQuod(4, 3, 1, ring)
+	
+	# Next we find the closest distance from any of the middles
+	distance_from_mid = min(abs(m - data) for m in middles) # This is O(1) because the list doesn't scale and its always 4
+
+	return distance_from_mid + ring
 
 def part2(data):
+	return
 	data = int(data)
 	# Because we can't create a infinite grid, we will simply create a big grid instead
 	# Just to keep it simple, we will make it odd * odd
