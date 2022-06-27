@@ -2,7 +2,7 @@ from math import sqrt, floor
 import numpy as np
 
 split_data = False
-completed = 1
+completed = True
 raw_data = None # Not To be touched
 
 def part1(data):
@@ -48,23 +48,50 @@ def part1(data):
 	return distance_from_mid + ring
 
 def part2(data):
-	return
 	data = int(data)
-	# Because we can't create a infinite grid, we will simply create a big grid instead
-	# Just to keep it simple, we will make it odd * odd
-	# This will give it a center
-	grid = np.zeros((1001, 1001))
-	def set_value(x, y , value):
-		# Done because of weird numpy indexing behavior
-		grid[x-1:y-1] = value
-	# Ok I am being honest, I have no clue as why this does not work. Numpy is weird!
-	def get_neighbours(x, y):
-		return grid[x-1:y-1].sum()
-	set_value(500, 500, 1)
 
-	grid1 = np.zeros((5,5), dtype=np.int)
-	grid1 = np.ndarray(shape=(5,5), dtype=np.int)
-	grid1[2:2] = 1
-	print(grid1)
-	x, y = 3, 3
-	print(grid1[y+1:x+1, 0:1])
+	# Most of the work and the logic was from https://stackoverflow.com/a/23707273/13703806
+	from itertools import count
+	from collections import namedtuple
+
+	Step  = namedtuple("Step", ["dx", "dy"])
+	RIGHT = Step( 1,  0)
+	DOWN  = Step( 0,  1)
+	LEFT  = Step(-1,  0)
+	UP    = Step( 0, -1)
+
+	size = (1000, 1000)
+	mid = size[0] // 2 - 1
+
+	grid = np.zeros(size, dtype=int)
+	grid[mid, mid] = 1
+
+	def steps_from_center():
+		for n in count(start=1):
+			if n % 2:
+				yield RIGHT
+				for i in range(n):
+					yield UP
+				for i in range(n):
+					yield LEFT
+			else:
+				yield LEFT
+				for i in range(n):
+					yield DOWN
+				for i in range(n):
+					yield RIGHT
+	last = 0
+	x, y = mid, mid
+
+	def output(x, y):
+		return grid[y-1:y+2,x-1:x+2].sum()
+
+
+	for i, step in enumerate(steps_from_center(), start=2):
+		if last >= data:
+			return last
+		else:
+			x += step.dx
+			y += step.dy
+			last = output(x, y)
+			grid[y][x] = last
