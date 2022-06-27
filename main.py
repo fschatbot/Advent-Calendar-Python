@@ -48,7 +48,7 @@ def collect_data(force) -> None:
 			with open(txt_path, 'w') as file:
 				file.write(raw_data)
 		elif response.status_code == 400 and raw_data == 'Puzzle inputs differ by user.  Please log in to get your puzzle input.':
-			print("Hey looks like you need to provide a session cookie!")
+			print(f"Hey looks like you need to provide a {'new ' if config.session_cookie else ''}session cookie!")
 			exit()
 		else:
 			print(response.status_code, raw_data)
