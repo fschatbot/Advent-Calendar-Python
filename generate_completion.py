@@ -1,5 +1,6 @@
 import importlib
 import inspect
+import os
 import re
 from typing import Callable
 import requests
@@ -60,6 +61,17 @@ def get_year_completion(year:str):
 	print(f"Generated solution for year {year}: {' '.join(solutions)}")
 	return solutions
 
+def get_code_count() -> int:
+	'''Returns the number of lines of code in the project'''
+	count = 0
+	for dir in os.listdir('.'):
+		if not os.path.isdir(dir): continue
+		for file in os.listdir(dir):
+			if not file.endswith('.py'): continue
+			with open(f'{dir}/{file}', 'r', encoding='utf-8') as f:
+				lines = [1 for line in f.readlines() if line.strip() != '' or line.strip().startswith('#')]
+				count += sum(lines)
+	return count
 
 def generate_completion():
 	years = get_all_years()
@@ -86,6 +98,8 @@ Over Here you can see the completion status of the project.
 Parts Completed: {parts_completed}/{len(flattened_solutions) * 2} ({parts_completed / (len(flattened_solutions) * 2) * 100:,.2f}%)
 <br>
 Days Completed: {days_completed}/{len(flattened_solutions)} ({days_completed / (len(flattened_solutions)) * 100:,.2f}%)
+<br>
+Lines of code: {get_code_count()}
 
 ### Legend
 
