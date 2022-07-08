@@ -5,6 +5,8 @@ Over Here you can see the completion status of the project.
 Parts Completed: 144/350 (41.14%)
 <br>
 Days Completed: 71/175 (40.57%)
+<br>
+Lines of code: 3736
 
 ### Legend
 
