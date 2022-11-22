@@ -6,6 +6,10 @@ import importlib
 from os import path, makedirs
 from time import time
 import argparse
+from rich.console import Console
+from rich.panel import Panel
+
+console = Console()
 
 try:
 	import config
@@ -76,9 +80,13 @@ def run_code() -> None:
 	After the complete run of each part the answer is printed in the console with the amount of time it took to run"""
 	module = importlib.import_module(module_path.replace('/','.'))
 	if str(module.completed) != str(True):
-		print("\nWARNING: This answer is still not complete and it may be wrong\n")
+		console.line()
+		console.print('[bold]WARNING[/]: This answer is still not complete and it may be wrong', style='red')
+		console.line()
+		# print("\nWARNING: This answer is still not complete and it may be wrong\n")
 	
 	# Splitting the data into parts
+	parseStart = time()
 	if module.split_data == True:
 		module.raw_data = raw_data.split('\n')
 	elif isinstance(module.split_data, str):
@@ -87,22 +95,37 @@ def run_code() -> None:
 		module.raw_data = module.split_data(raw_data)
 	else:
 		module.raw_data = raw_data
+	parseEnd = time()
+	parseTime = (" + " + formatTime(parseEnd - parseStart)) if round(parseEnd - parseStart, 3) > 0 else ""
 
 	# Part 1
-	start = time()
-	answer1 = module.part1(module.raw_data.copy() if isinstance(module.raw_data, (dict, list)) else raw_data)
-	end = time()
-	print("The answer to the 1st part is:", answer1)
+	console.rule(f'Day {args.day} of {args.year}')
+	with console.status('Running Part 1', spinner='aesthetic'):
+		start = time()
+		answer1 = module.part1(module.raw_data.copy() if isinstance(module.raw_data, (dict, list)) else raw_data)
+		end = time()
 	# If the total time is above 0.01 secounds then we show it in secounds otherwise we show it in milliseconds
-	time_taken = f'{end - start:,.3}s' if end - start > 0.01 else f'{(end - start) * 1000:,.3}ms'
-	print(f"The 1st answer was calculated in just {time_taken}")
+	time_taken = formatTime(end - start)
+	console.print(Panel(f"Answer to the 1st part: {answer1} ({time_taken}{parseTime})"))
+	
 	# Part 2
-	start = time()
-	answer2 = module.part2(module.raw_data.copy() if isinstance(module.raw_data, (dict, list)) else raw_data)
-	end = time()
-	print("The answer to the 2nd part is:", answer2)
-	time_taken = f'{end - start:,.3}s' if end - start > 0.01 else f'{(end - start) * 1000:,.3}ms'
-	print(f"The 1st answer was calculated in just {time_taken}")
+	with console.status('Running Part 2', spinner='aesthetic'):
+		start = time()
+		answer2 = module.part2(module.raw_data.copy() if isinstance(module.raw_data, (dict, list)) else raw_data)
+		end = time()
+	# print("The answer to the 2nd part is:", answer2)
+	time_taken = formatTime(end - start)
+	console.print(Panel(f"Answer to the 2nd part: {answer2} ({time_taken}{parseTime})"))
+	# print(f"The 1st answer was calculated in just {time_taken}")
+
+def formatTime(timeTaken:float) -> str:
+	# timeTaken is in seconds
+	if timeTaken > 60:
+		return f'{timeTaken / 60:,.3}m'
+	elif timeTaken >= 1:
+		return f'{timeTaken:,.3}s'
+	else:
+		return f'{(timeTaken) * 1000:,.3}ms'
 
 if __name__ == "__main__":
 	if not path.exists(module_path+'.py'):
