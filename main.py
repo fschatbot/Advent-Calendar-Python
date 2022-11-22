@@ -122,7 +122,7 @@ def formatTime(timeTaken:float) -> str:
 	# timeTaken is in seconds
 	if timeTaken > 60:
 		return f'{timeTaken / 60:,.3}m'
-	elif timeTaken >= 1:
+	elif timeTaken >= .1:
 		return f'{timeTaken:,.3}s'
 	else:
 		return f'{(timeTaken) * 1000:,.3}ms'
