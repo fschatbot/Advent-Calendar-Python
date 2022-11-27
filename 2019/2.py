@@ -1,4 +1,4 @@
-from intcode import computer, InvalidOpCode
+from .intcode import computer, InvalidOpCode
 
 split_data = ','
 completed = True
