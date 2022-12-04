@@ -12,5 +12,5 @@ def part1(data):
 	return outputs[-1]
 
 def part2(data):
-	_, _, outputs = computer3(data, 5)
+	outputs = computer3(data, [5])
 	return outputs[-1]

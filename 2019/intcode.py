@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 class InvalidOpCode(Exception):
 	def __init__(self, instructions, ErrIndex):
 		self.instructions = instructions
@@ -61,12 +63,13 @@ def computer2(instructions:list, inp:int) -> int:
 			raise InvalidOpCode(ins, i)
 	return ins, ins[0], outputs
 
-def computer3(instructions:list, inp:int) -> int:
-	"""This computer is enough for day 5, part 2"""
+def computer3(instructions:list, inputs:List[int]) -> List[int]:
+	"""This computer is enough for day 5 part 2 and day 7 part 1"""
 	ins = [int(x) for x in instructions.copy()]
 	def getVal(index, mode): return ins[ins[index]] if mode == '0' else ins[index] # Returns the value based on the parameter mode
 
 	outputs = []
+	inps = inputs.copy()
 
 	# Running the IntCode Computer
 	i = 0
@@ -83,7 +86,7 @@ def computer3(instructions:list, inp:int) -> int:
 			ins[ins[i+3]] = getVal(i+1, mode[0]) * getVal(i+2, mode[1])
 			i += 4
 		elif op_code == 3:
-			ins[ins[i+1]] = inp
+			ins[ins[i+1]] = inps.pop(0)
 			i += 2
 		elif op_code == 4:
 			outputs.append(getVal(i+1, mode[0]))
@@ -114,4 +117,5 @@ def computer3(instructions:list, inp:int) -> int:
 			break
 		else:
 			raise InvalidOpCode(ins, i)
-	return ins, ins[0], outputs
+	return outputs
+
