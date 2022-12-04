@@ -1,4 +1,4 @@
-from .intcode import computer, InvalidOpCode
+from .intcode import computer1, InvalidOpCode
 
 split_data = ','
 completed = True
@@ -8,7 +8,7 @@ raw_data = None # Not To be touched
 def part1(data):
 	# First we do the replacement
 	data = list(map(int, data))
-	return computer(data, 12, 2)
+	return computer1(data, 12, 2)
 
 def part2(data):
 	# TODO: COMPLETE THIS
@@ -17,7 +17,7 @@ def part2(data):
 
 	for noun in range(100):
 		for verb in  range(100):
-			try: output = computer(data, noun, verb) # <- Coping is important
+			try: output = computer1(data, noun, verb) # <- Coping is important
 			except InvalidOpCode: continue
 
 			if output == 19690720:
