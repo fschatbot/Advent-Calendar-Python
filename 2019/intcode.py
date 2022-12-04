@@ -31,27 +31,29 @@ def computer1(instructions:list, input1:int, input2:int) -> int:
 def computer2(instructions:list, inp:int) -> int:
 	"""This computer is enough for day 5, part 1"""
 	ins = [int(x) for x in instructions.copy()]
-	getVal = lambda index, mode: ins[index] if mode == '0' else index
+	def getVal(index, mode): return ins[ins[index]] if mode == '0' else ins[index] # Returns the value based on the parameter mode
 
 	outputs = []
 
 	# Running the IntCode Computer
 	i = 0
 	while i < len(ins):
+		# Over here we extract the op code and the parameter mode
 		instruction = str(ins[i]).zfill(4)
 		op_code = int(instruction[-2:])
 		mode = instruction[:-2][::-1]
+		# Over here we perform the op code instructions
 		if op_code == 1:
-			ins[ins[i+3]] = getVal(ins[i+1], mode[0]) + getVal(ins[i+2], mode[1])
+			ins[ins[i+3]] = getVal(i+1, mode[0]) + getVal(i+2, mode[1])
 			i += 4
 		elif op_code == 2:
-			ins[ins[i+3]] = getVal(ins[i+1], mode[0]) * getVal(ins[i+2], mode[1])
+			ins[ins[i+3]] = getVal(i+1, mode[0]) * getVal(i+2, mode[1])
 			i += 4
 		elif op_code == 3:
 			ins[ins[i+1]] = inp
 			i += 2
 		elif op_code == 4:
-			outputs.append(getVal(ins[i+1], mode[0]))
+			outputs.append(getVal(i+1, mode[0]))
 			i += 2
 		elif op_code == 99:
 			break
@@ -62,46 +64,48 @@ def computer2(instructions:list, inp:int) -> int:
 def computer3(instructions:list, inp:int) -> int:
 	"""This computer is enough for day 5, part 2"""
 	ins = [int(x) for x in instructions.copy()]
-	getVal = lambda index, mode: ins[index] if mode == '0' else index
+	def getVal(index, mode): return ins[ins[index]] if mode == '0' else ins[index] # Returns the value based on the parameter mode
 
 	outputs = []
 
 	# Running the IntCode Computer
 	i = 0
 	while i < len(ins):
+		# Over here we extract the op code and the parameter mode
 		instruction = str(ins[i]).zfill(4)
 		op_code = int(instruction[-2:])
 		mode = instruction[:-2][::-1]
+		# Over here we perform the op code instructions
 		if op_code == 1:
-			ins[ins[i+3]] = getVal(ins[i+1], mode[0]) + getVal(ins[i+2], mode[1])
+			ins[ins[i+3]] = getVal(i+1, mode[0]) + getVal(i+2, mode[1])
 			i += 4
 		elif op_code == 2:
-			ins[ins[i+3]] = getVal(ins[i+1], mode[0]) * getVal(ins[i+2], mode[1])
+			ins[ins[i+3]] = getVal(i+1, mode[0]) * getVal(i+2, mode[1])
 			i += 4
 		elif op_code == 3:
 			ins[ins[i+1]] = inp
 			i += 2
 		elif op_code == 4:
-			outputs.append(getVal(ins[i+1], mode[0]))
+			outputs.append(getVal(i+1, mode[0]))
 			i += 2
 		elif op_code == 5:
-			if getVal(ins[i+1], mode[0]) != 0:
-				i = getVal(ins[i+2], mode[1])
+			if getVal(i+1, mode[0]) != 0:
+				i = getVal(i+2, mode[1])
 			else:
 				i += 3
 		elif op_code == 6:
-			if getVal(ins[i+1], mode[0]) == 0:
-				i = getVal(ins[i+2], mode[1])
+			if getVal(i+1, mode[0]) == 0:
+				i = getVal(i+2, mode[1])
 			else:
 				i += 3
 		elif op_code == 7:
-			if getVal(ins[i+1], mode[0]) < getVal(ins[i+2], mode[1]):
+			if getVal(i+1, mode[0]) < getVal(i+2, mode[1]):
 				ins[ins[i+3]] = 1
 			else:
 				ins[ins[i+3]] = 0
 			i += 4
 		elif op_code == 8:
-			if getVal(ins[i+1], mode[0]) == getVal(ins[i+2], mode[1]):
+			if getVal(i+1, mode[0]) == getVal(i+2, mode[1]):
 				ins[ins[i+3]] = 1
 			else:
 				ins[ins[i+3]] = 0
