@@ -4,7 +4,7 @@
 import requests
 import importlib
 from os import path, makedirs
-from time import time
+from time import time, gmtime
 import argparse
 from rich.console import Console
 from rich.panel import Panel
@@ -29,6 +29,20 @@ parser = argparse.ArgumentParser(description='Manually Enter Year and Day')
 parser.add_argument('-d', '--day', type=int, help='The year of the day', default=config.day)
 parser.add_argument('-y','--year', type=int, help='The day from which you require the answer', default=config.year)
 args = parser.parse_args()
+
+# Implementing some safety checks to ensure that the day and years are in the right range
+if len(str(args.year)) == 2: # <- This will only work for the 20th century
+	args.year = 2000 + args.year
+
+tm_tuple = gmtime(time())
+
+if not (0 < args.day<= 25):
+	raise ValueError('The day is not in the right range!')
+elif not (2015 <= args.year <= tm_tuple.tm_year):
+	raise ValueError('The year is not in the right range!')
+elif args.year == tm_tuple.tm_year and not args.day <= tm_tuple.tm_mday:
+	raise ValueError('The day has not been revealed yet')
+
 
 folder_path = f'{args.year}/'
 txt_path = f'{args.year}/inputs/{args.day}.txt'
