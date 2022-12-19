@@ -113,7 +113,8 @@ def run_code() -> None:
 	parseTime = (" + " + formatTime(parseEnd - parseStart)) if round(parseEnd - parseStart, 3) > 0 else ""
 
 	# Part 1
-	console.rule(f'Day {args.day} of {args.year}')
+	completion_map = {'True': chr(10004), '1': '~', 'False': 'X'} # 100 emoji and tick mark 
+	console.rule(f'[spring_green4][{completion_map[str(module.completed)]}][/] Day {args.day} of {args.year}')
 	with console.status('Running Part 1', spinner='aesthetic'):
 		start = time()
 		answer1 = module.part1(module.raw_data.copy() if isinstance(module.raw_data, (dict, list)) else raw_data)
