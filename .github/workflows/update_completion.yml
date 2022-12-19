@@ -12,7 +12,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.9.1
         with:
           access_token: ${{ secrets.SECRET_TOKEN }}
-  build:
+  update-completion:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
