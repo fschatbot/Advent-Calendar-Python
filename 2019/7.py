@@ -5,7 +5,7 @@ from itertools import permutations
 from .intcode import computer4
 
 split_data = ','
-completed = 1
+completed = True
 raw_data = None # Not To be touched
 
 def part1(data):
