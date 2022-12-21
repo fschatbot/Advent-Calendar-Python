@@ -60,7 +60,7 @@ def collect_data(force) -> None:
 		except FileExistsError:
 			pass
 		response = requests.get(f'https://adventofcode.com/{args.year}/day/{args.day}/input', cookies={'session':config.session_cookie})
-		raw_data = response.text
+		raw_data = response.text.strip('\n')
 		# Save the data for backup
 		if response.status_code == 200:
 			with open(txt_path, 'w') as file:
