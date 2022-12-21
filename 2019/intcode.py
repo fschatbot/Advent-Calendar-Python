@@ -129,11 +129,11 @@ class computer4:
 		self.pointer = 0
 	
 	# These functions allow for control
-	def input(self, inp:int) -> None:
-		self.inps.append(inp)
+	def input(self, *inp:int) -> None:
+		self.inps.extend(inp)
 	
 	# These functions allow the computer to run
-	def getVal(self, index:int, mode:Literal[0, 1]) -> int:
+	def getVal(self, index:int, mode:Literal['0', '1']) -> int:
 		"""Return value from index based on the mode provided. 0 stands for positional mode and 1 stands fo literal mode."""
 		return self[self[index]] if mode == '0' else self[index]
 	
@@ -142,19 +142,21 @@ class computer4:
 		return self.ins[__index]
 	def __setitem__(self, __index, __value):
 		"""Set instruction from index"""
-		self.ins[__index] == __value
+		self.ins[__index] = __value
 
 	@classmethod
-	def from_instructions(cls, instructions:List[int]) -> """computer4""":
+	def from_instructions(cls, instructions:list) -> """computer4""":
 		return cls([int(x) for x in instructions.copy()])
 
 	# Runner Functions
 	def run_once(self):
-		"""Runs the IntCode once"""
+		"""Runs the IntCode once. TODO: Fix this function"""
 		if self.halted: raise RuntimeError("The computer has already halted")
+		if self.pointer >= len(self.ins): raise RuntimeError("The index pointer is out of range")
 		
 		# Over here we extract the op code and the parameter mode
-		instruction = str(self.ins[i]).zfill(4)
+		i = self.pointer
+		instruction = str(self[i]).zfill(4)
 		op_code = int(instruction[-2:])
 		mode = instruction[:-2][::-1]
 		# Over here we perform the op code instructions
@@ -195,7 +197,8 @@ class computer4:
 		elif op_code == 99:
 			self.halted = True
 		else:
-			raise InvalidOpCode(self, i)
+			raise ValueError(f"Invalid op code recived. Expected 1-8 and 99 got {op_code}")
+		self.pointer = i
 	
 	def run_till_output(self) -> int:
 		"""Keeps running the code till their is an output"""
