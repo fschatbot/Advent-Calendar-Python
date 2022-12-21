@@ -4,7 +4,7 @@
 from .intcode import computer2, computer3
 
 split_data = ','
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 def part1(data):	
