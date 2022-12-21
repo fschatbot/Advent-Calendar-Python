@@ -5,7 +5,7 @@ from itertools import permutations
 from .intcode import computer4
 
 split_data = ','
-completed = False
+completed = 1
 raw_data = None # Not To be touched
 
 def part1(data):
@@ -14,8 +14,9 @@ def part1(data):
 		# Testing out the combination
 		output = 0
 		for phase in combination:
-			outputs = computer4(data.copy(), [phase, output])
-			output = outputs[0]
+			computer = computer4.from_instructions(data)
+			computer.input(phase, output)
+			output = computer.run_till_output()
 		
 		maxOutput = max(maxOutput, output)
 	return maxOutput
