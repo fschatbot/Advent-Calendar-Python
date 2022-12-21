@@ -99,20 +99,23 @@ def run_code() -> None:
 		console.line()
 		# print("\nWARNING: This answer is still not complete and it may be wrong\n")
 	
-	# Splitting the data into parts
+	def data_parser(data):
+		if module.split_data == True:
+			return data.split('\n')
+		elif isinstance(module.split_data, str):
+			return [x.strip() for x in data.split(module.split_data)]
+		elif callable(module.split_data):
+			return module.split_data(data)
+		else:
+			return data
+
+	# Data Parsing for part 1
 	parseStart = time()
-	if module.split_data == True:
-		module.raw_data = raw_data.split('\n')
-	elif isinstance(module.split_data, str):
-		module.raw_data = [x.strip() for x in raw_data.split(module.split_data)]
-	elif callable(module.split_data):
-		module.raw_data = module.split_data(raw_data)
-	else:
-		module.raw_data = raw_data
+	module.raw_data = data_parser(raw_data)
 	parseEnd = time()
 	parseTime = (" + " + formatTime(parseEnd - parseStart)) if round(parseEnd - parseStart, 3) > 0 else ""
 
-	# Part 1
+	# Running Part 1
 	completion_map = {'True': chr(10004), '1': '~', 'False': 'X'} # 100 emoji and tick mark 
 	console.rule(f'[spring_green4][{completion_map[str(module.completed)]}][/] Day {args.day} of {args.year}')
 	with console.status('Running Part 1', spinner='aesthetic'):
@@ -123,7 +126,12 @@ def run_code() -> None:
 	time_taken = formatTime(end - start)
 	console.print(Panel(f"Answer to the 1st part: {answer1} ({time_taken}{parseTime})"))
 	
-	# Part 2
+	# Data Parsing for part 2
+	parseStart = time()
+	module.raw_data = data_parser(raw_data)
+	parseEnd = time()
+	parseTime = (" + " + formatTime(parseEnd - parseStart)) if round(parseEnd - parseStart, 3) > 0 else ""
+	# Running Part 2
 	with console.status('Running Part 2', spinner='aesthetic'):
 		start = time()
 		answer2 = module.part2(module.raw_data.copy() if isinstance(module.raw_data, (dict, list)) else raw_data)
