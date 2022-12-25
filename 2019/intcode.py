@@ -1,4 +1,4 @@
-from typing import List, Tuple, Literal
+from typing import List, Tuple, Literal, Optional
 
 class InvalidOpCode(Exception):
 	def __init__(self, instructions, ErrIndex):
@@ -214,8 +214,8 @@ class computer4:
 	
 	# Properties
 	@property
-	def recent_output(self) -> int:
-		return self.outs[-1]
+	def recent_output(self) -> Optional[int]:
+		return self.outs[-1] if self.outs else None
 
 class computer5(computer4):
 	def __init__(self, instructions: List[int]) -> None:
