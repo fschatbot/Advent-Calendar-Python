@@ -1,7 +1,7 @@
 import numpy as np
 
 split_data = True
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 # If I am being honest, this is the most fun challenge
