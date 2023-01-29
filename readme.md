@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/python-3776AB?logo=python&style=for-the-badge&logoColor=white)
 
 </div>
-  
+ 
 ## How to use
 
 First you need to git clone the repository. You need to make sure that python is installed. Next install the requirements.txt to make sure that it works
