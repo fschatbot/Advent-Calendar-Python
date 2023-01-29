@@ -33,6 +33,7 @@ def part1(data):
 	return len(panels)
 
 def part2(data):
+	# Same as above
 	direction_map = {
 		0: (0, 1),
 		1: (1, 0),
