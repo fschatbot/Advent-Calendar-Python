@@ -16,7 +16,7 @@ def part2(data):
 	data = list(map(int, data))
 
 	for noun in range(100):
-		for verb in  range(100):
+		for verb in range(100):
 			try: output = computer1(data, noun, verb) # <- Coping is important
 			except InvalidOpCode: continue
 

@@ -32,12 +32,12 @@ def replace_molecules(molecule, data):
 	return combinations
 
 def part1(data):
-	molecule, replacements  = complile_data(data)
+	molecule, replacements = complile_data(data)
 	combinations = replace_molecules(molecule, replacements)
 	return len(set(combinations))
 
 def part2(data):
-	molecule, replacements  = complile_data(data)
+	molecule, replacements = complile_data(data)
 	NotFound = True
 	lookfors = ['e']
 	steps = 0

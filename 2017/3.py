@@ -54,11 +54,11 @@ def part2(data):
 	from itertools import count
 	from collections import namedtuple
 
-	Step  = namedtuple("Step", ["dx", "dy"])
-	RIGHT = Step( 1,  0)
-	DOWN  = Step( 0,  1)
-	LEFT  = Step(-1,  0)
-	UP    = Step( 0, -1)
+	Step = namedtuple("Step", ["dx", "dy"])
+	RIGHT = Step( 1, 0)
+	DOWN = Step( 0, 1)
+	LEFT = Step(-1, 0)
+	UP  = Step( 0, -1)
 
 	size = (1000, 1000)
 	mid = size[0] // 2 - 1

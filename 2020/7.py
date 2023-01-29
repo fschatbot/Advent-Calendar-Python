@@ -46,7 +46,7 @@ def find_bags(bag, bag_data):
 	bag_content = bag_data[bag]
 	# We go though each bag in the bag_content and add the number of bags in the bag to the total.
 	for bag_name, count in bag_content.items():
-		total += count +  (count * find_bags(bag_name, bag_data))
+		total += count + (count * find_bags(bag_name, bag_data))
 	return total
 
 
