@@ -64,9 +64,6 @@ def proccessOutput(output):
 	# displayMap(tiles)
 
 	return score, ball, paddle, gameOver
-	
-
-	return tiles, score
 
 
 def part2(data):
