@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from math import ceil
-from collections import Counter
 
 def process_data(data):
 	map = {}
@@ -19,7 +18,7 @@ def process_data(data):
 
 
 split_data = process_data
-completed = 1
+completed = True
 raw_data = None # Not To be touched
 
 def part1(data):
@@ -48,88 +47,48 @@ def part1(data):
 def part2(data):
 	INITIAL_ORE_DEPOSIT = 1e12 # 1 trillion
 
-	def createFuel(fuelAmount):
+	def createFuel(fuelAmount, initialReserve):
 		"""Calculates the amount of ores required and leftOvers"""
-		reserve = {}
+		reserve = initialReserve
 		ore_amount = 0
 
-		new_chemicals = {'FUEL': fuelAmount}
-		last_chemicals = {}
+		new_orders = {'FUEL': fuelAmount}
+		last_orders = {}
 		# Expand the new chemicals until all that is left is ORE
-		while any(chemical != 'ORE' for chemical in new_chemicals):
-			last_chemicals = new_chemicals
-			new_chemicals = {}
-			for chemical in last_chemicals:
+		while new_orders:
+			last_orders = new_orders
+			new_orders = {}
+
+			# Go through each order
+			for chemical, amount in last_orders.items():
 				if chemical == 'ORE':
-					ore_amount += last_chemicals[chemical]
-					continue
-					
-				need = last_chemicals[chemical] - reserve.get(chemical, 0)
-				made  = data[chemical]['quantity'] * ceil(need / data[chemical]['quantity'])
-				reserve[chemical] = made - need
-
-				for _ in range(made):
+					ore_amount += amount
+				elif reserve.get(chemical, 0) >= amount:
+					reserve[chemical] -= amount
+				else:
+					# Calculate the amount of batches we need to make
+					need = amount - reserve.get(chemical, 0) # The order - the reserve
+					batch = ceil(need / data[chemical]['quantity']) # need / quantity per batch
+					# Make the batches
 					for reactant in data[chemical]['reactants']:
-						new_chemicals[reactant[1]] = new_chemicals.get(reactant[1], 0) + reactant[0]
-				# print(need, made)
-				# exit()
-
-				# for reactant in data[chemical]['reactants']:
-				# 	new_chemicals[reactant[1]] = new_chemicals.get(reactant[1], 0) + reactant[0] * ceil(need / data[chemical]['quantity'])
-			# print(new_chemicals)
-			
-
+						new_orders[reactant[1]] = new_orders.get(reactant[1], 0) + reactant[0] * batch # Add child reactants * batch
+					# Store the leftovers
+					reserve[chemical] = batch * data[chemical]['quantity'] - need # made - need
 		return ore_amount, reserve
 	
-	# estimate = INITIAL_ORE_DEPOSIT // createFuel(1)[0]
-	# ores, reserve = createFuel(int(estimate))
-	ores, reserve = createFuel(1)
-	print(ores, reserve)
-	return
-		
+	# Keep estimating the amount of fuel we can make with remain ores
+	# 1. estimate the amount of fuel we can make with the ores
+	# 2. Caclulate the actual amount of ores used
+	# 3. Delete the used ores from the reserve
+	# 4. Repeat till the estimate is 0
 
-
-	reserve = {'ORE': INITIAL_ORE_DEPOSIT} # stores the chemicals which are left over
-
-	def createChemical(chemical):
-		if chemical == 'ORE': raise Exception("We can't create ORE silly! 🤭")
-		for reactant in data[chemical]['reactants']:			
-			if reactant[1] not in reserve: reserve[reactant[1]] = 0 # Add the chemical to the reserve
-			
-			# Keep creating the chemical till we have enough
-			while reactant[0] > reserve[reactant[1]]:
-				reserve[reactant[1]] += createChemical(reactant[1])
-			
-			# The amount we created minus the amount we used for this reaction
-			reserve[reactant[1]] -= reactant[0]
-		
-		return data[chemical]['quantity'] # return the quantity we have made
-	
-	# The way we are achive the number simply through finding a sitaution where the reserve is empty again
-	# This will leave us in the exact same position as start expect we would know the extact number of FUEL
-	# we can make with no leftovers. From there its simple maths!!
-
-	FuelCounter = 0
-	memory = []
-	# Generating fuel until we have no leftovers
-	while any(reserve[chemical] != 0 for chemical in reserve if chemical != 'ORE') or FuelCounter == 0:
-		FuelCounter += createChemical('FUEL')
-		if {chemical: int(reserve[chemical]) for chemical in reserve if chemical != 'ORE'} in memory:
-			print("!!! RED ALERT")
-		memory.append({chemical: int(reserve[chemical]) for chemical in reserve if chemical != 'ORE'})
-	
-	from pathlib import Path
-	import json
-	Path("2019/temp2.json").write_text(json.dumps(memory))
-	
-	# The amount of ores that can be converted into fuel with 0 leftovers
-	goldenOreNumber = INITIAL_ORE_DEPOSIT - reserve['ORE']
-	# Simple maths to skip most of the work
-	FuelCounter  = (INITIAL_ORE_DEPOSIT // goldenOreNumber) * FuelCounter
-	reserve['ORE'] = INITIAL_ORE_DEPOSIT - (INITIAL_ORE_DEPOSIT // goldenOreNumber) * goldenOreNumber
-
-	# Generating whatever we can from the left over ores
-	while True:
-		try: FuelCounter += createChemical('FUEL')
-		except: return FuelCounter
-
+	oresUsed = 0
+	reserve = {}
+	fuelMade = 0
+	oneFuelEstimate,_ = createFuel(1, reserve)
+	while oresUsed < INITIAL_ORE_DEPOSIT:
+		estimate = (INITIAL_ORE_DEPOSIT - oresUsed) // oneFuelEstimate
+		if estimate == 0: return int(fuelMade)
+		ores, reserve = createFuel(int(estimate), reserve.copy())
+		fuelMade += estimate
+		oresUsed += ores
