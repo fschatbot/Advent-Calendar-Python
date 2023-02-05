@@ -212,6 +212,11 @@ class computer4:
 		while not self.halted:
 			self.run_once()
 	
+	def run_till_input(self):
+		"""Keeps running the code until the next command is about to ask for an input and we don't have any more inputs"""
+		while not self.halted and not (self.ins[self.pointer] % 100 == 3 and not self.inps):
+			self.run_once()
+	
 	# Properties
 	@property
 	def recent_output(self) -> Optional[int]:
