@@ -116,7 +116,7 @@ def run_code() -> None:
 	parseTime = (" + " + formatTime(parseEnd - parseStart)) if round(parseEnd - parseStart, 3) > 0 else ""
 
 	# Running Part 1
-	completion_map = {'True': chr(10004), '1': '~', 'False': 'X'} # 100 emoji and tick mark 
+	completion_map = {'True': '\u2714', '1': '~', 'False': '\u2718'}
 	console.rule(f'[spring_green4][{completion_map[str(module.completed)]}][/] Day {args.day} of {args.year}')
 	with console.status('Running Part 1', spinner='aesthetic'):
 		start = time()
