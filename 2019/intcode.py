@@ -318,3 +318,19 @@ class computer5(computer4):
 			raise ValueError(f"Invalid op code recived. Expected 1-8 and 99 got {op_code}")
 		
 		self.pointer = i
+
+class computer6(computer5):
+	def __init__(self, instructions: List[int]) -> None:
+		super().__init__(instructions)
+		self.extra_memory = {}
+	
+	def copy(self):
+		"""Returns a copy of the computer"""
+		new = computer6.from_instructions(self.ins)
+		new.pointer = self.pointer
+		new.inps = self.inps.copy()
+		new.outs = self.outs.copy()
+		new.halted = self.halted
+		new.relative_base = self.relative_base
+		new.extra_memory = self.extra_memory.copy()
+		return new
