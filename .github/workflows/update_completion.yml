@@ -4,20 +4,16 @@ on:
   push:
     branch: [master]
     paths:
-      - '20*/**'
+      - "20*/**"
 
 jobs:
-  cancel-previous-runs:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
-        with:
-          access_token: ${{ secrets.SECRET_TOKEN }}
   update-completion:
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
         with:
           python-version: "3.10.x"
