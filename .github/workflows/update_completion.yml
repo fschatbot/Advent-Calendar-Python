@@ -3,6 +3,8 @@ name: Deploy Site on fschatbot.github.io
 on:
   push:
     branch: [master]
+    paths:
+      - 20*/**
 
 jobs:
   cancel-previous-runs:
