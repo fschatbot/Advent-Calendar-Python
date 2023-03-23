@@ -4,7 +4,7 @@ on:
   push:
     branch: [master]
     paths:
-      - 20*/**
+      - '20*/**'
 
 jobs:
   cancel-previous-runs:
