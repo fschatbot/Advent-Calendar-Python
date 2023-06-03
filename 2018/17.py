@@ -7,7 +7,7 @@ def parse(data):
 	map = {}
 
 	for line in data.split('\n'):
-		staticVariable, staticValue, dynamicVariable, dynamicStart, dynamicEnd = re.search(r'(\w)=(\d+), (\w)=(\d+)\.\.(\d+)', line).groups()
+		staticVariable, staticValue, _, dynamicStart, dynamicEnd = re.search(r'(\w)=(\d+), (\w)=(\d+)\.\.(\d+)', line).groups()
 		staticValue, dynamicStart, dynamicEnd = int(staticValue), int(dynamicStart), int(dynamicEnd)
 		for dynamicValue in range(dynamicStart, dynamicEnd+1):
 			if staticVariable == 'x':
@@ -102,7 +102,6 @@ def simulate(map):
 		old_map = dict(map)
 
 		waterBlocks = [waterBlock(500, 1, 0, 1)]
-		count = 1
 		fixWater = []
 		ignoreChildren = []
 		while any(not water.dead for water in waterBlocks):
@@ -118,8 +117,6 @@ def simulate(map):
 						if (child.x, child.y, child.dx, child.dy) in ignoreChildren: continue
 						ignoreChildren.append((child.x, child.y, child.dx, child.dy))
 						waterBlocks.append(child)
-						count += 1
-					# waterBlocks.extend(children)
 			waterBlocks = [water for water in waterBlocks if not water.dead]
 		# Putting some water at rest
 		for potentialRest in fixWater:
