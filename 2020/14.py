@@ -37,11 +37,14 @@ def part2(data):
 		if line.startswith('mask'):
 			mask = line.split('=')[1].strip()
 		else:
+			# Extracting the values
 			memIndexLine, value = line.split('=')
 			memIndex = int(memIndexLine[4:-2])
 			val = int(value)
+			# Appling the mask
 			indexB = format(memIndex, 'b').rjust(36, '0')
 			maskedIndex = ''.join(v if v != '0' else indexB[i] for i, v in enumerate(mask))
+			# Replacing X with 0 or 1 and updating the memory
 			for replacement in product('01', repeat=maskedIndex.count('X')):
 				index = str(maskedIndex)
 				for possiblity in replacement:
