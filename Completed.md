@@ -6,7 +6,7 @@ Parts Completed: 196/400 (49.00%)
 <br>
 Days Completed: 97/200 (48.50%)
 <br>
-Lines of code: 5331
+Lines of code: 5328
 
 ### Legend
 
