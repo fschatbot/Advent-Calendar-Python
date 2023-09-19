@@ -1,5 +1,5 @@
-requests==2.31.0
-beautifulsoup4==4.12.2
-regex==2023.6.3
-numpy==1.25.0
-rich==13.4.2
+requests>=2.31
+beautifulsoup4>=4.12
+regex>=2023.8.8
+numpy>=1.25
+rich>=13.5
