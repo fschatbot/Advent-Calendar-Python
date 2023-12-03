@@ -1,7 +1,7 @@
 # Over Here you enter the year of the Advent Calendar 20xx
 year = 2015
 # Over Here you are going to type in the day 1 - 31
-day = 6
+day = 1
 # This session cookie can be obtained by the following method.
 # 1) GO TO https://adventofcode.com/2020/day/1/input
 # 2) Now open up the DevTools --> Network Tab
