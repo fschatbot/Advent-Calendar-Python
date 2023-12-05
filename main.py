@@ -120,7 +120,7 @@ def run_code() -> None:
 	console.rule(f'[spring_green4][{completion_map[str(module.completed)]}][/] Day {args.day} of {args.year}')
 	with console.status('Running Part 1', spinner='aesthetic'):
 		start = time()
-		answer1 = module.part1(module.raw_data.copy() if isinstance(module.raw_data, (dict, list)) else raw_data)
+		answer1 = module.part1(module.raw_data)
 		end = time()
 	# If the total time is above 0.01 secounds then we show it in secounds otherwise we show it in milliseconds
 	time_taken = formatTime(end - start)
@@ -134,7 +134,7 @@ def run_code() -> None:
 	# Running Part 2
 	with console.status('Running Part 2', spinner='aesthetic'):
 		start = time()
-		answer2 = module.part2(module.raw_data.copy() if isinstance(module.raw_data, (dict, list)) else raw_data)
+		answer2 = module.part2(module.raw_data)
 		end = time()
 	# print("The answer to the 2nd part is:", answer2)
 	time_taken = formatTime(end - start)
