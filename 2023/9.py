@@ -6,6 +6,7 @@ completed = True
 raw_data = None # Not To be touched
 
 def part1(data):
+	"""Got Rank #594 on leaderboard"""
 	acc = 0
 	for line in data:
 		seqMap = [[int(x) for x in line.split(' ')]]
