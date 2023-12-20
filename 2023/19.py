@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import List, Tuple, Dict
+from copy import deepcopy
 import re
 
 def parse(data:str) -> Tuple[Dict[str, List], List[Dict]]:
@@ -31,7 +32,7 @@ def parse(data:str) -> Tuple[Dict[str, List], List[Dict]]:
 	return workflow, partList
 
 split_data = parse
-completed = 1
+completed = True
 raw_data = None # Not To be touched
 
 def part1(data:Tuple[Dict[str, List], List[Dict]]):
@@ -59,7 +60,53 @@ def part1(data:Tuple[Dict[str, List], List[Dict]]):
 	
 	return acc
 
-
-
 def part2(data:List[str]):
-	...
+	workflow = data[0] # We don't need the second thing!
+	
+	queue = [{'x': [1, 4000], 'm': [1, 4000], 'a': [1, 4000], 's': [1, 4000], 'workflow': 'in'}] # I am not writting the entire obj （︶^︶）
+	accepted = 0
+
+	while queue:
+		item = queue.pop(0)
+		if item['workflow'] == 'A':
+			# numpy.prod doesn't work for odd reasons!
+			processed = [item[k][1] - item[k][0] + 1 for k in 'xmas']
+			accepted += processed[0] * processed[1] * processed[2] * processed[3]
+			continue
+		elif item['workflow'] == 'R':
+			continue
+		rules = workflow[item['workflow']]
+
+		for rule in rules:
+			# There are three possibility!
+			# 1. Its > and entire thing is above. In which case, break and append the entire thing back with the different workflow
+			# 2. Its < and entire thing is below. In which case, break and append the entire thing back with the different workflow
+			# 3. The value is in the middle of the min and max. In which case, we edit the item to that what didn't match and continue
+			# 3.a We take the part which matched and add to the queue
+			# 3.b We edit the item currently under inspection to the condition that would fail the rule
+
+			if rule['isLast']:
+				queue.append({**item, 'workflow': rule['action']}) # Last rule
+				continue
+
+			minN, maxN = item[rule['key']]
+			if rule['operator'] == '>' and minN > rule['value']:
+				queue.append({**item, 'workflow': rule['action']}) # The entire item works
+				break
+			elif rule['operator'] == '<' and maxN < rule['value']:
+				queue.append({**item, 'workflow': rule['action']}) # The entire item works
+				break
+			elif rule['operator'] == '>' and maxN > rule['value'] and minN <= rule['value']:  # Some of the item works
+				newItem = deepcopy(item)
+				newItem['workflow'] = rule['action']
+				newItem[rule['key']][0] = rule['value'] + 1
+				queue.append(newItem)
+				item[rule['key']][1] = rule['value']
+			elif rule['operator'] == '<' and minN < rule['value'] and maxN >= rule['value']:  # The entire item works
+				newItem = deepcopy(item)
+				newItem['workflow'] = rule['action']
+				newItem[rule['key']][1] = rule['value'] - 1
+				queue.append(newItem)
+				item[rule['key']][0] = rule['value']
+
+	return accepted
