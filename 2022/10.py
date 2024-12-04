@@ -62,4 +62,4 @@ def part2(data):
 			ins += 1
 	
 	for row in screen: print(''.join(row))
-	return 'This time, there will be no returned output as its super hard to guess all the letter patterns. However, a human can read the above display and figure out the output!'
+	print('This time, there will be no returned output as its super hard to guess all the letter patterns. However, a human can read the above display and figure out the output!')
