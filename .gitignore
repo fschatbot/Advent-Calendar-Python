@@ -3,3 +3,4 @@ config.py
 */inputs/*.txt
 Completed.md
 *.dump.*
+debug.html
