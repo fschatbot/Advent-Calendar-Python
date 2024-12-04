@@ -63,9 +63,6 @@ def part2(data):
 	# then we know what the password is
 	
 	scrambled = "fbgdceah"
-	possible = []
 	for i in permutations(scrambled):
 		if scramble(i, data) == scrambled:
-			possible.append(''.join(i))
-	# There can be multiple possibilities, so we return the first one
-	return possible[0]
+			return ''.join(i)

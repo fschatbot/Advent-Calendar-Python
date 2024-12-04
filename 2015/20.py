@@ -4,7 +4,8 @@ raw_data = None # Not To be touched
 
 def factor_sum(num):
 	# returns a list of factors of num
-	factors = [i+1 for i in range(num) if num % (i+1) == 0]
+	factors = [i for i in range(1, num+1//2) if num % i == 0]
+	
 	return sum(factors)
 
 def part1(data):
