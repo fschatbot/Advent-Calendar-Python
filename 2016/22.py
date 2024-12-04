@@ -97,7 +97,7 @@ def part2(data):
 	# Pretty printing the data
 	with open("2016/day 22.dump.txt", "w") as f:
 		# Printing the display into the console
-		display = grid.astype(np.str)
+		display = grid.astype(str)
 		display[display == '1'] = '#'
 		display[display == '0'] = '_'
 		display[display == '-1'] = '.'

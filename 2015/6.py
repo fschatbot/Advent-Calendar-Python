@@ -12,7 +12,7 @@ def proccess(line):
 
 def part1(data):
 	"""The Code is supposed to run here"""
-	grid = np.zeros((1000, 1000), dtype=np.bool) # True represents lit and False represents off
+	grid = np.zeros((1000, 1000), dtype=bool) # True represents lit and False represents off
 	for line in data:
 		if line.startswith('toggle'):
 			x1, y1, x2, y2 = proccess(line.lstrip('toggle '))
