@@ -42,8 +42,7 @@ def part2(data):
 	data['root'][1] = '='
 	
 	def get_monkey(name):
-		if name == 'humn':
-			return complex(0, 1)
+		if name == 'humn': return complex(0, 1) # Change for part 2
 		yells = data[name]
 		if isinstance(yells, int): return yells
 		mon1 = get_monkey(yells[0])
@@ -59,7 +58,7 @@ def part2(data):
 			case '/':
 				return mon1 / mon2
 			case '=':
-				return mon1, mon2
+				return mon1, mon2 # Change for part 2
 	
 	out1, out2 = get_monkey('root')
 	comp, norm = (out1, out2) if isinstance(out1, complex) else (out2, out1)
