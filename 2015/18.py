@@ -43,7 +43,7 @@ def part1(data):
 	# Now we have to go though 100 steps
 	for _ in range(100):
 		# First we make a new grid
-		new_grid = np.zeros(grid_shape, np.bool)
+		new_grid = np.zeros(grid_shape, bool)
 		# Next we loop though the grid lights
 		for row in range(grid_shape[0]):
 			for col in range(grid_shape[1]):
@@ -56,7 +56,6 @@ def part1(data):
 					new_grid[row, col] = True
 		# Set the new grid to the old grid, update counter
 		grid = new_grid
-		print(_,end='\r')
 	return np.sum(grid)
 
 def part2(data):
@@ -69,7 +68,7 @@ def part2(data):
 	# Now we have to go though 100 steps
 	for _ in range(100):
 		# First we make a new grid
-		new_grid = np.zeros(grid_shape, np.bool)
+		new_grid = np.zeros(grid_shape, bool)
 		# Next we loop though the grid lights
 		for row in range(grid_shape[0]):
 			for col in range(grid_shape[1]):
@@ -87,7 +86,6 @@ def part2(data):
 					new_grid[row, col] = True
 		# Set the new grid to the old grid, update counter
 		grid = new_grid
-		print(_,end='\r')
 	return np.sum(grid)
 
 # THIS ONE WAS A LOT OF WORK

@@ -3,8 +3,9 @@
 
 import requests
 import importlib
+import regex as re
 from os import path, makedirs
-from time import time, gmtime
+from time import time, gmtime, sleep
 import argparse
 from rich.console import Console
 from rich.panel import Panel
@@ -28,6 +29,7 @@ except ImportError:
 parser = argparse.ArgumentParser(description='Manually Enter Year and Day')
 parser.add_argument('-d', '--day', type=int, help='The year of the day', default=config.day)
 parser.add_argument('-y','--year', type=int, help='The day from which you require the answer', default=config.year)
+parser.add_argument('-sub', '--submit', action='store_true', help='Submit the answer to the server')
 args = parser.parse_args()
 
 # Implementing some safety checks to ensure that the day and years are in the right range
@@ -40,7 +42,7 @@ if not (0 < args.day<= 25):
 	raise ValueError('The day is not in the right range!')
 elif not (2015 <= args.year <= tm_tuple.tm_year):
 	raise ValueError('The year is not in the right range!')
-elif args.year == tm_tuple.tm_year and not args.day <= tm_tuple.tm_mday:
+elif args.year == tm_tuple.tm_year and args.day > tm_tuple.tm_mday:
 	raise ValueError('The day has not been revealed yet')
 
 
@@ -66,7 +68,10 @@ def collect_data(force) -> None:
 			with open(txt_path, 'w') as file:
 				file.write(raw_data)
 		elif response.status_code == 400 and raw_data == 'Puzzle inputs differ by user.  Please log in to get your puzzle input.':
-			print(f"Hey looks like you need to provide a {'new ' if config.session_cookie else ''}session cookie!")
+			console.print(f"[red]Hey looks like you need to provide a {'new ' if config.session_cookie else ''}session cookie!")
+			exit()
+		elif response.status_code == 404 and "Please don't repeatedly request this endpoint before it unlocks!" in raw_data:
+			console.print(f"[red]Looks like the question for this day has not been revealed yet!")
 			exit()
 		else:
 			print(response.status_code, raw_data)
@@ -88,6 +93,41 @@ def setup() -> None:
 			lines = template.readlines()
 			file.write(''.join(lines))
 
+
+def submit_code(answer, level) -> None:
+	if not args.submit: return
+	if answer is None: return
+
+	res = requests.post(f'https://adventofcode.com/{args.year}/day/{args.day}/answer', headers={
+		'cookie': f'session={config.session_cookie}',
+		'content-type': 'application/x-www-form-urlencoded'
+	}, data={
+		'level': level,
+		'answer': answer
+	})
+
+	out = res.text.strip()
+	open('debug.html','w', encoding='utf-8').write(out)
+
+	response = re.findall(f'<article>(.*?)</article>', out.replace('\n',''))
+	response = re.sub(r'<[^>]*?>', '', response[0])
+
+	if 'That\'s the right answer!' in out:
+		console.print(f"Answer was [bold green]correct[/]! (Sleeping for 5s...)")
+		sleep(5) # Sleep for 10 seconds to avoid getting rate limited
+	elif "You don't seem to be solving the right level" in out:
+		console.print(f"[cyan]Looks like we already solved this one =)")
+	elif "You gave an answer too recently;" in out:
+		seconds = re.search(r'You have (\d+)s left to wait.', response).group(1)
+		console.print(f"[bold red]Rate Limited[/]! Sleeping for {seconds}s...")
+		sleep(int(seconds)+1)
+		submit_code(answer, level)
+	else:
+		console.print(f'Answer was [bold red]incorrect[/]!\nServer Response: {response}')
+		sleep(10) # Sleep for 10 seconds to avoid getting rate limited		
+
+	
+
 # Run the Code
 def run_code() -> None:
 	"""This function is responsible for running the code from the given year and day
@@ -98,6 +138,9 @@ def run_code() -> None:
 		console.print('[bold]WARNING[/]: This answer is still not complete and it may be wrong', style='red')
 		console.line()
 		# print("\nWARNING: This answer is still not complete and it may be wrong\n")
+	
+	if args.submit:
+		console.print("[bold cyan]INFO[/]: Whatever the output is, it will be submitted to the server")
 	
 	def data_parser(data):
 		if module.split_data == True:
@@ -125,6 +168,9 @@ def run_code() -> None:
 	# If the total time is above 0.01 secounds then we show it in secounds otherwise we show it in milliseconds
 	time_taken = formatTime(end - start)
 	console.print(Panel(f"Answer to the 1st part: {answer1} ({time_taken}{parseTime})"))
+
+	submit_code(answer1, '1')
+
 	
 	# Data Parsing for part 2
 	parseStart = time()
@@ -139,6 +185,8 @@ def run_code() -> None:
 	# print("The answer to the 2nd part is:", answer2)
 	time_taken = formatTime(end - start)
 	console.print(Panel(f"Answer to the 2nd part: {answer2} ({time_taken}{parseTime})"))
+
+	submit_code(answer2, '2')
 	# print(f"The 1st answer was calculated in just {time_taken}")
 
 def formatTime(timeTaken:float) -> str:

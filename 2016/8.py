@@ -42,7 +42,7 @@ def part2(data):
 			display[int(x),:] = np.roll(display[int(x),:],int(y))
 	# Code for part 2 begins here
 	# Printing the display into the console
-	display = display.astype(np.str)
+	display = display.astype(str)
 	display[display == '1'] = '\u2588' # Full block, makes it easier to read
 	display[display == '0'] = ' '
 	for row in display:
