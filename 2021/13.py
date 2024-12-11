@@ -11,9 +11,9 @@ def print_points(points):
 	rowLen = max(point[0] for point in points)
 
 	for y in range(colLen+1):
-		print()
 		for x in range(rowLen+1):
 			print('\u2588' if (x,y) in points else ' ', end='')
+		print()
 	
 def part1(data):
 	# This is just basic reflection (simple geomertic maths)
