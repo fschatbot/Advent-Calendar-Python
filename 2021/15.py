@@ -4,7 +4,7 @@
 from heapq import heappush, heappop
 
 split_data = True
-completed = True
+completed = False
 raw_data = None # Not To be touched
 
 class Posv1:
