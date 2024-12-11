@@ -18,7 +18,7 @@ Then you can run the script with the following command:
 
 `python main.py --year [year] --day [day]`
 
-Running a day that doesn't exsits will create a runner file for the day. This is a public repo meaning you can create your own answers and commit to the repo.
+Running a day that doesn't exsits will create a runner file for the day. This is a public repo meaning you can create your own answers and commit to the repo. This repo does follow the automation guidelines on the /r/adventofcode community wiki
 
 ## Journey of advent calendar
 

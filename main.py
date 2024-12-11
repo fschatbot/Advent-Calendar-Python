@@ -61,7 +61,7 @@ def collect_data(force) -> None:
 			makedirs(folder_path+'inputs')
 		except FileExistsError:
 			pass
-		response = requests.get(f'https://adventofcode.com/{args.year}/day/{args.day}/input', cookies={'session':config.session_cookie})
+		response = requests.get(f'https://adventofcode.com/{args.year}/day/{args.day}/input', cookies={'session':config.session_cookie}, headers={'User-Agent': 'github.com/fschatbot/Advent-Calendar-Python/ by FSChatbot'})
 		raw_data = response.text.strip('\n')
 		# Save the data for backup
 		if response.status_code == 200:
