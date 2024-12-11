@@ -4,7 +4,7 @@
 from typing import List
 
 split_data = True
-completed = True
+completed = 1
 raw_data = None # Not To be touched
 
 class MOVEMENT:
