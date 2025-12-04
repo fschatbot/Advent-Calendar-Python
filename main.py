@@ -214,5 +214,8 @@ if __name__ == "__main__":
 		if not raw_data:
 			print("Looks like the data doesn't exsist! Refetching data", end="\r")
 			collect_data(True)
+		elif args.submit:
+			print(f"Force Downloading data as it will be submitted", end="\r")
+			collect_data(True)
 		print("Running Code...",end="\r")
 		run_code()
