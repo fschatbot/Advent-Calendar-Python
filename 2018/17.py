@@ -19,7 +19,7 @@ def parse(data):
 	return map
 
 split_data = parse
-completed = True
+completed = 1
 raw_data = None # Not To be touched
 
 def print_map(map):
