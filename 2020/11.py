@@ -36,7 +36,7 @@ def getAdjecent(coord, map):
 
 def part1(data):
 	map = {}
-	new_map = parse(data)
+	new_map = data
 	while map != new_map:
 		map, new_map = new_map, {}
 		for pos, state in map.items():
@@ -64,7 +64,7 @@ def getVisible(coord, map):
 
 def part2(data):
 	map = {}
-	new_map = parse(data)
+	new_map = data
 	while map != new_map:
 		map, new_map = new_map, {}
 		for pos, state in map.items():
