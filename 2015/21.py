@@ -5,6 +5,7 @@ split_data = True
 completed = False
 raw_data = None # Not To be touched
 
+# We have added dummy rings and armor so it can simiulate choosing "nothing"
 shop = {
 	"weapons": [(8, 4), (10, 5), (25, 6), (40, 7), (74, 8)],
 	"armor": [(0, 0), (13, 1), (31, 2), (53, 3), (75, 4), (102, 5)],
@@ -12,7 +13,7 @@ shop = {
 }
 
 def part1(data):
-	enemy_damage, enemy_armor = int(data[1].split(":")[1]), int(data[2].split(":")[1])
+	enemy_health, enemy_damage, enemy_armor = (int(line.split(":")[1]) for line in data)
 
 	best_cost = float('inf')
 
@@ -25,7 +26,8 @@ def part1(data):
 					armor = ad + rls[2] + rrs[2]
 
 					# Now we need our effective damage to be higher than the enemies effective damage
-					if damage - enemy_armor < enemy_damage - armor: continue
+					# For the math to be correct we would need +1 on both sides (because ceil not floor). That cancels out so not required.
+					if enemy_health // max(damage - enemy_armor, 1) > 100 // max(enemy_damage - armor, 1): continue
 
 					best_cost = min(best_cost, cost)
 	
@@ -34,7 +36,7 @@ def part1(data):
 
 
 def part2(data):
-	enemy_damage, enemy_armor = int(data[1].split(":")[1]), int(data[2].split(":")[1])
+	enemy_health, enemy_damage, enemy_armor = (int(line.split(":")[1]) for line in data)
 
 	most_cost = 0
 
@@ -46,8 +48,9 @@ def part2(data):
 					damage = wd + rls[1] + rrs[1]
 					armor = ad + rls[2] + rrs[2]
 
-					# Now we need our effective damage to be lower than the enemies effective damage
-					if damage - enemy_armor >= enemy_damage - armor: continue
+					# Now we need our effective rounds to be higher than the enemy
+					# For the math to be correct we would need +1 on both sides (because ceil not floor). That cancels out so not required.
+					if enemy_health // max(damage - enemy_armor, 1) <= 100 // max(enemy_damage - armor, 1): continue
 
 					most_cost = max(most_cost, cost)
 	
