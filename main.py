@@ -16,7 +16,7 @@ try:
 	import config
 except ImportError:
 	# Generate the config file
-	print("You didn't have the config filem, so i created one! Please edit it and enter your session cookie in the file!")
+	print("You didn't have the config file, so i created one! Please edit it and enter your session cookie in the file!")
 	# Read the template
 	with open('config-template.py','r') as file:
 		lines = file.readlines()
