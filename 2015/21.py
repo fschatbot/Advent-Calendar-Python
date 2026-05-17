@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 split_data = True
-completed = False
+completed = True
 raw_data = None # Not To be touched
 
 # We have added dummy rings and armor so it can simiulate choosing "nothing"
