@@ -1,8 +1,8 @@
+from functools import cache
+
 split_data = lambda data: sorted([int(x) for x in data.split('\n')], reverse=True)
 completed = True
 raw_data = None # Not To be touched
-
-from functools import cache
 
 def part1(data):
 	aim = sum(data) // 3
