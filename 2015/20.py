@@ -30,14 +30,10 @@ def part2(data):
 	num = data // 11
 	houses = [0] * num
 	for i in range(1, num):
-		# Make a counter to keep track of the number of times a present is delivered
-		counter = 0
-		for j in range(i-1, num, i):
-			# Simple check to see if the counter is not above 50
-			if counter > 50: break
-			# Deliver the present and increment the counter
-			houses[j] += i * 11
-			counter += 1
+		for j in range(1, 51):
+			if i * j >= num: break
+			houses[i * j] += i * 11
+		if houses[i] >= data: break # Small optimization
 	for index, house in enumerate(houses):
 		if house >= data:
-			return index + 1
+			return index
